@@ -1,0 +1,35 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  
+    mat-card {
+      width: 350px;
+      padding: 20px;
+      text-align: center;
+    }
+  
+    .full-width {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .login-subtitle {
+        font-size: 0.875rem; 
+        color: #6c757d; 
+        text-align: center;  
+        margin-top: 10px; 
+    }
+
+    button.mat-raised-button {
+        background-color: #1B263B; 
+        color: white;  
+    }
+      
+    button.mat-raised-button:hover {
+        background-color: #162133; 
+    }
+}
+  
