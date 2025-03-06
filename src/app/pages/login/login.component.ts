@@ -29,17 +29,20 @@ export class LoginComponent {
   constructor(private service: LoginService, private router : Router) {}
 
   onSubmit() {
-    this.service.login(this.email, this.password).subscribe(
-      (response) => {
-        console.log('Login bem-sucedido:', response);
+    // this.service.login(this.email, this.password).subscribe(
+    //   (response) => {
+    //     console.log('Login bem-sucedido:', response);
         
-        localStorage.setItem('authToken', response.token);
+    //     localStorage.setItem('authToken', response.token);
         
-        // this.router.navigate(['/home']);
-      },
-      (error) => {
-        console.error('Erro no login:', error);
-        this.errorMessage = 'Credenciais inválidas. Tente novamente.';
-      }
-    );  }
+    //     this.router.navigate(['/home']);
+    //   },
+    //   (error) => {
+    //     console.error('Erro no login:', error);
+    //     this.errorMessage = 'Credenciais inválidas. Tente novamente.';
+    //   }
+    // );  
+    this.router.navigate(['/home']);
+  }
+
 }
