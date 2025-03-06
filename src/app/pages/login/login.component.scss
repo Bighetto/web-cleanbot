@@ -31,5 +31,22 @@
     button.mat-raised-button:hover {
         background-color: #162133; 
     }
+
+    .logo {
+      width: 120px; 
+      height: auto; 
+      position: absolute;
+      top: 30px;
+      left: 30px; 
+    }
+
+    .login-container {
+      position: relative; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh; 
+      justify-content: center; 
+    }
 }
   
