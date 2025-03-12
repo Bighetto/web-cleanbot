@@ -20,14 +20,14 @@ import { CommonModule } from '@angular/common';
 })
 export class SidebarComponent {
   menuItems = [
-    { title: 'Bancos', icon: 'account_balance', route: '/bancos' },
-    { title: 'Resultados', icon: 'dashboard', route: '/resultados' },
-    { title: 'Meu Plano', icon: 'payment', route: '/planos' }
+    { title: 'Bancos', icon: 'account_balance', route: 'bancos' },
+    { title: 'Resultados', icon: 'dashboard', route: 'resultados' },
+    { title: 'Meu Plano', icon: 'payment', route: 'planos' }
   ];
 
   constructor(private router: Router) {}
 
   navigate(route: string) {
-    this.router.navigate([route]);
+    this.router.navigate([`/home/${route}`]);
   }
 }

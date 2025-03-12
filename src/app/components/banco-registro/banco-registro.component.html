@@ -1,0 +1,48 @@
+<h4 class="title">Adicionar Banco</h4>
+
+<div class="container">
+
+  <div class="banco-container">
+    <form>
+      <p id="banco-desc">Selecione o banco que deseja adicionar</p>
+      <p id="banco-title">Banco</p>
+      <mat-form-field appearance="outline" class="banco-form">
+        <mat-select [(value)]="bancoSelecionado" (selectionChange)="atualizarImagem()">
+          <mat-option value="V8">V8 Digital</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  
+    @if (imagemBanco) {
+      <img [src]="imagemBanco" alt="Logo do Banco" class="banco-img">
+    }    
+  </div>
+  
+  <div class="credenciais-container">
+    <form class="example-form">
+      <p>Login</p>
+      <mat-form-field appearance="outline" class="input-form">
+        <mat-label>Login</mat-label>
+        <input matInput placeholder="Digite seu login">
+      </mat-form-field>
+  
+      <p>Senha</p>
+      <mat-form-field appearance="outline" class="input-form">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" placeholder="Digite sua senha">
+      </mat-form-field>
+  
+      <p>Apelido</p>
+      <mat-form-field appearance="outline" class="input-form">
+        <mat-label>Apelido</mat-label>
+        <input matInput placeholder="Digite seu apelido">
+      </mat-form-field>
+    </form>
+  </div>  
+
+</div>
+
+<div class="actions">
+  <button mat-button (click)="fechar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="salvarBanco()">Salvar</button>
+</div>
