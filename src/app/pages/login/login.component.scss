@@ -3,22 +3,42 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #EEF0FF;
   
     mat-card {
-      width: 350px;
+      width: 450px;
       padding: 20px;
       text-align: center;
     }
-  
-    .full-width {
+
+    mat-card-title{
+      color: #1B263B;
+    }
+
+
+    .input-credentials {
+      border-radius: 10px;
       width: 100%;
-      margin-bottom: 15px;
+      height: 50%;
+      margin-top: 15px;
+    }
+    .forgot-password-btn {
+      display: block;
+      margin: 0px 0;
+      color: #007bff;
+      text-transform: none;
+    } 
+    
+    .enter-button{
+      width: 100%;
+      margin-top: 40px;
+      background-color: #1B263B;
+      color: white;
     }
 
     .login-subtitle {
         font-size: 0.875rem; 
-        color: #6c757d; 
+        color: #1B263B; 
         text-align: center;  
         margin-top: 10px; 
     }

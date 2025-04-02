@@ -5,18 +5,22 @@
       <p class="login-subtitle">Utilize suas credenciais para acessar o sistema</p>
       <mat-card-content>
         <form (submit)="onSubmit()">
-          <mat-form-field appearance="outline" class="full-width">
+          <mat-form-field appearance="outline" class="input-credentials">
             <mat-label>E-mail</mat-label>
             <input matInput type="email" [(ngModel)]="email" name="email" required />
           </mat-form-field>
   
-          <mat-form-field appearance="outline" class="full-width">
+          <mat-form-field appearance="outline" class="input-credentials" >
             <mat-label>Senha</mat-label>
-            <input matInput type="password" [(ngModel)]="password" name="password" required />
+            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required />
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="hide ? 'Mostrar senha' : 'Ocultar senha'" type="button">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
           </mat-form-field>
-  
-          <button mat-raised-button class="full-width">Entrar</button>
+          <button mat-button class="forgot-password-btn" (click)="esqueciMinhaSenha()">Esqueci minha senha</button>
+          
         </form>
+        <button mat-raised-button class="enter-button">Entrar</button>
       </mat-card-content>
     </mat-card>
 

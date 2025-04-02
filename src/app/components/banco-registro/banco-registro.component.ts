@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -14,7 +16,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatCardModule, 
     MatFormFieldModule, 
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIcon,
+    FormsModule
   ],
   templateUrl: './banco-registro.component.html',
   styleUrls: ['./banco-registro.component.scss']
@@ -23,6 +27,10 @@ export class BancoRegistroComponent {
 
   bancoSelecionado: string | null = null;
   imagemBanco: string | null = null;
+  hide: boolean = true;
+  login: string = '';
+  password: string = '';
+  nickname: string = '';
 
   constructor(private dialogRef: MatDialogRef<BancoRegistroComponent>) {}
 
