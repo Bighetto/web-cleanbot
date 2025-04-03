@@ -4,6 +4,8 @@ import {MatCardModule} from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { BancoRegistroComponent } from '../../components/banco-registro/banco-registro.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-bancos',
@@ -14,7 +16,22 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class BancosComponent {
 
-  constructor(private dialog: MatDialog) {}
+  authToken: string | null = null;
+  nome: string | null = null;
+  email: string | null = null;
+
+  constructor(private dialog: MatDialog, @Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.authToken = localStorage.getItem('authToken') || '';
+      this.nome = localStorage.getItem('nome') || 'Usuário';
+      this.email = localStorage.getItem('email') || '';
+    } else {
+      this.authToken = '';
+      this.nome = 'Usuário';
+      this.email = '';
+    }
+
+  }
 
   abrirRegistroBanco() {
     this.dialog.open(BancoRegistroComponent, {

@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ import { MatIcon } from '@angular/material/icon';
      MatCardModule, 
      MatFormFieldModule, 
      MatInputModule,
-     MatIcon
+     MatIcon,
+     CommonModule
     ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -32,19 +34,26 @@ export class LoginComponent {
   constructor(private service: LoginService, private router : Router) {}
 
   onSubmit() {
-    this.service.login(this.email, this.password).subscribe(
-      (response) => {
+    this.service.login(this.email, this.password).subscribe({
+      next: (response) => {
         console.log('Login bem-sucedido:', response);
         
         localStorage.setItem('authToken', response.token);
+        localStorage.setItem('nome', response.nome);
+        localStorage.setItem('email', response.email)
         
         this.router.navigate(['/home']);
       },
-      (error) => {
+      error: (error) => {
         console.error('Erro no login:', error);
-        this.errorMessage = 'Credenciais inválidas. Tente novamente.';
+  
+        if (error.status === 401) {
+          this.errorMessage = 'E-mail ou senha incorretos.';
+        } else {
+          this.errorMessage = 'Ocorreu um erro. Tente novamente mais tarde.';
+        }
       }
-    );  
+    });
     // this.router.navigate(['/home']);
   }
 

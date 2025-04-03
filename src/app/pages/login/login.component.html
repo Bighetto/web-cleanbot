@@ -1,6 +1,11 @@
 <div class="login-container">
     <img src="/img/logo.png" alt="Logo" class="logo">
-    <mat-card>
+    <div *ngIf="errorMessage" class="error-box">
+      <mat-icon class="error-icon">error</mat-icon> 
+      <span>{{ errorMessage }}</span>
+    </div>
+    
+    <mat-card class="card-principal">
       <mat-card-title>Login</mat-card-title>
       <p class="login-subtitle">Utilize suas credenciais para acessar o sistema</p>
       <mat-card-content>
@@ -17,10 +22,10 @@
               <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
           </mat-form-field>
+
           <button mat-button class="forgot-password-btn" (click)="esqueciMinhaSenha()">Esqueci minha senha</button>
-          
+          <button mat-raised-button class="enter-button">Entrar</button>
         </form>
-        <button mat-raised-button class="enter-button">Entrar</button>
       </mat-card-content>
     </mat-card>
 

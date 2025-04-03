@@ -4,8 +4,35 @@
     align-items: center;
     height: 100vh;
     background-color: #EEF0FF;
+    flex-direction: column;
+
+    .error-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffcccc; 
+      color: #d8000c;
+      border: 1px solid #d8000c; 
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px auto;
+      text-align: center; 
+      font-weight: bold; 
+      width: 100%; 
+      max-width: 400px;
+  }
   
-    mat-card {
+  .error-icon {
+      display: flex;
+      align-items: center;
+      margin-right: 8px;
+  }
+  
+  mat-icon {
+      font-size: 20px;
+  }
+  
+    .card-principal {
       width: 450px;
       padding: 20px;
       text-align: center;
