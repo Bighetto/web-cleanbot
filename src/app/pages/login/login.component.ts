@@ -59,6 +59,8 @@ export class LoginComponent {
 
   esqueciMinhaSenha(){
 
+    this.router.navigate(['/recuperar-senha']);
+
   }
 
 }

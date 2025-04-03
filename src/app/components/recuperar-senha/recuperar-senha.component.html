@@ -1,0 +1,23 @@
+<div class="recover-container">
+
+    <img src="/img/logo.png" alt="Logo" class="logo">
+<mat-card>
+    <mat-card-title>Recuperação de Senha</mat-card-title>
+    <p>Digite seu e-mail e envie para receber o link de recuperação de senha.</p>
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" [(ngModel)]="email" required />
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" (click)="enviarRecuperacao()">
+        Enviar Solicitação
+      </button>
+  
+      <mat-card *ngIf="mensagemRecuperacao" class="mensagem-box" [ngClass]="mensagemClasse">
+        {{ mensagemRecuperacao }}
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>
+  
