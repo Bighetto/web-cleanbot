@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { UserService } from '../../services/user.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-recuperar-senha',
@@ -16,6 +16,7 @@ import { LoginService } from '../../services/login.service';
     CommonModule,
     FormsModule,
     MatInputModule,
+    RouterModule,
   ],
   templateUrl: './recuperar-senha.component.html',
   styleUrls: ['./recuperar-senha.component.scss']
@@ -26,7 +27,7 @@ export class RecuperarSenhaComponent {
   mensagemClasse: string = '';
   isLoading = false;
 
-  constructor(private loginService : LoginService){
+  constructor(private loginService : UserService){
     
   }
 

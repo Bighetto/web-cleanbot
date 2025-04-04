@@ -1,0 +1,93 @@
+.recover-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #EEF0FF;
+    flex-direction: column;
+  }
+  
+  mat-card.form-card {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    width: 100%;
+    margin: 40px auto;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  mat-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #1B263B;
+    padding: 10px;
+  }
+  
+  form {
+    width: 100%;
+  }
+  
+  mat-form-field.full-width {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  button.full-width {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 20px;
+    background-color: #1B263B;
+    color: white;
+    border-radius: 20px;
+  }
+  
+  p.erro-msg,
+  p.sucesso-msg {
+    padding-inline: 10px;
+    padding-bottom: 15px;
+  }
+  
+  .erro-msg {
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    border-left: 5px solid #dc3545 !important;
+  }
+  
+  .sucesso-msg {
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #d4edda !important;
+    color: #155724 !important;
+    border-left: 5px solid #28a745 !important;
+  }
+  
+  .logo {
+    width: 120px;
+    height: auto;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+  }
+
+  .voltar-btn {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  

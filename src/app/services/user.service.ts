@@ -7,7 +7,7 @@ import { LoginResponse } from '../models/login.response.model';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class UserService {
 
   // private apiUrl: string = `${environment.apiUrl}/authenticate`;
 

@@ -1,0 +1,40 @@
+<div class="recover-container">
+    <a routerLink="/login">
+        <img src="/img/logo.png" alt="Logo" class="logo">
+    </a>
+    <mat-card class="form-card">
+        <mat-card-title>Recuperar Senha</mat-card-title>
+        <p>Preencha os campos com a nova senha e confirme para redefinir sua senha.</p>
+        <form (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nova senha</mat-label>
+                <input matInput [type]="hideSenha ? 'password' : 'text'" [(ngModel)]="formulario.value.senha" name="senha" required />
+                <button mat-icon-button matSuffix (click)="hideSenha = !hideSenha" [attr.aria-label]="hideSenha ? 'Mostrar senha' : 'Ocultar senha'" type="button">
+                  <mat-icon>{{ hideSenha ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </mat-form-field>
+        
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Confirmar senha</mat-label>
+                <input matInput [type]="hideConfirmar ? 'password' : 'text'" [(ngModel)]="formulario.value.confirmarSenha" name="confirmarSenha" required />
+                <button mat-icon-button matSuffix (click)="hideConfirmar = !hideConfirmar" [attr.aria-label]="hideConfirmar ? 'Mostrar senha' : 'Ocultar senha'" type="button">
+                  <mat-icon>{{ hideConfirmar ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </mat-form-field>
+    
+            <button mat-raised-button color="primary" class="full-width" type="submit">
+                Enviar
+            </button>
+    
+            <p *ngIf="erro" class="erro-msg">{{ erro }}</p>
+            <p *ngIf="sucesso" class="sucesso-msg">{{ sucesso }}</p>
+        </form>
+  </mat-card>
+
+  <button mat-button color="primary" routerLink="/login" class="voltar-btn">
+    <mat-icon>arrow_back</mat-icon>
+    Voltar para o login
+  </button>
+
+</div>
+  

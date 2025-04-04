@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { LoginService } from '../../services/login.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -31,7 +31,7 @@ export class LoginComponent {
   hide: boolean = true;
 
 
-  constructor(private service: LoginService, private router : Router) {}
+  constructor(private service: UserService, private router : Router) {}
 
   onSubmit() {
     this.service.login(this.email, this.password).subscribe({
