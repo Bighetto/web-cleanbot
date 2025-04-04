@@ -54,7 +54,12 @@ export class LoginComponent {
         }
       }
     });
-    // this.router.navigate(['/home']);
+
+  //   localStorage.setItem('authToken', 'testeToken');
+  //   localStorage.setItem('nome', 'Arthur Bighetto');
+  //   localStorage.setItem('email', 'arthurbighetto36@gmail.com')
+  //   this.router.navigate(['/home']);
+  // 
   }
 
   esqueciMinhaSenha(){

@@ -6,6 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UserService } from '../../services/user.service';
 import { RouterModule } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @Component({
   selector: 'app-recuperar-senha',
@@ -17,6 +19,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     MatInputModule,
     RouterModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './recuperar-senha.component.html',
   styleUrls: ['./recuperar-senha.component.scss']

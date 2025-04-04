@@ -11,8 +11,9 @@
         <input matInput type="email" [(ngModel)]="email" required />
       </mat-form-field>
   
-      <button mat-raised-button color="primary" (click)="enviarRecuperacao()">
-        Enviar Solicitação
+      <button mat-raised-button color="primary" (click)="enviarRecuperacao()" [disabled]="isLoading">
+        <mat-spinner *ngIf="isLoading" diameter="20" strokeWidth="3"></mat-spinner>
+        <span *ngIf="!isLoading">Enviar Solicitação</span>
       </button>
   
       <mat-card *ngIf="mensagemRecuperacao" class="mensagem-box" [ngClass]="mensagemClasse">
