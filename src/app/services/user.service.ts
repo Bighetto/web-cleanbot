@@ -33,11 +33,24 @@ export class UserService {
       { observe: 'response', responseType: 'text' as 'json' }
     ).pipe(
       catchError((error) => {
-        console.error('Erro no login', error);
         return throwError(() => error); 
       })
     );
   }
+
+  renewPassword(token: string, newPassword: string): Observable<HttpResponse<string>> {
+    return this.http.post(
+      this.apiUrl.concat('renewPassword/' + token),
+      { newPassword },
+      {
+        observe: 'response',
+        responseType: 'text'
+      }
+    ).pipe(
+      catchError((error) => throwError(() => error))
+    );
+  }
+  
   
   
   
