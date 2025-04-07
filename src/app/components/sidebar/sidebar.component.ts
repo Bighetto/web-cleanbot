@@ -30,4 +30,9 @@ export class SidebarComponent {
   navigate(route: string) {
     this.router.navigate([`/home/${route}`]);
   }
+
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 }

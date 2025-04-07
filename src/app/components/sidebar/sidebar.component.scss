@@ -1,32 +1,73 @@
 .sidenav-container {
-  height: 100vh;
-}
+    height: 100vh;
+  }
   
-.sidenav {
+  .sidenav {
     width: 250px;
     background-color: #ffffff;
-    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-}
+    padding-bottom: 20px; // espaço pro botão de logout respirar
+    position: relative;
+  }
   
-.logo-container {
+  .logo-container {
     display: flex;
     justify-content: center;
     padding: 20px;
-}
+  }
   
-.logo {
+  .logo {
     width: 120px;
     height: auto;
-}
+  }
   
-mat-list-item {
+  mat-list-item {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 15px;
-    color: white;
-}
+    color: #555;
+    font-weight: 500;
   
-mat-list-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  
+    mat-icon {
+      font-size: 20px;
+      vertical-align: middle;
+    }
+  }
+  
+  .menu-wrapper {
+    padding-bottom: 60px; // espaço pro botão não sobrepor os itens
+  }
+  
+  .logout-button {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    color: #555;
+    font-weight: 500;
+    border-top: 1px solid #e0e0e0;
+    background-color: white;
+  
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  
+    mat-icon {
+      font-size: 20px;
+    }
+  }
   

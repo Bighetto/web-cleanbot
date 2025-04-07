@@ -1,16 +1,21 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" opened class="sidenav">
-      <div class="logo-container">
-        <img src="/img/logo.png" alt="Logo" class="logo">
-      </div>
-  
-      <mat-nav-list>
-        <mat-list-item *ngFor="let item of menuItems" (click)="navigate(item.route)">
-          <mat-icon>{{ item.icon }}</mat-icon>
-          <span>{{ item.title }}</span>
-        </mat-list-item>
-      </mat-nav-list>
-    </mat-sidenav>
-    <router-outlet></router-outlet>
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="logo-container">
+      <img src="/img/logo.png" alt="Logo" class="logo" />
+    </div>
+
+    <mat-nav-list class="menu-wrapper">
+      <mat-list-item *ngFor="let item of menuItems" (click)="navigate(item.route)">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.title }}</span>
+      </mat-list-item>
+    </mat-nav-list>
+
+    <div class="logout-button" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Sair</span>
+    </div>
+  </mat-sidenav>
+
+  <router-outlet></router-outlet>
 </mat-sidenav-container>
-  
