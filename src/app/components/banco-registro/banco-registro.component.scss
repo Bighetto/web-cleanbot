@@ -1,157 +1,118 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  background-color: #EEF0FF;
+  padding: 30px;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+
 .title {
-  text-align: center;
-  font-size: 24px;
-  margin: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1B263B;
+  margin-bottom: 20px;
 }
 
 .container {
   display: flex;
-  justify-content: space-around; 
+  flex-direction: row;
+  gap: 40px;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 20px; 
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  width: 100%;  
 }
 
-.banco-form, 
-.input-form {
+.banco-container,
+.credenciais-container {
+  flex: 0 0 48%; 
+  min-width: 300px;
+}
+
+.form-wrapper {
+  position: relative;
   background-color: #EEF0FF;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 16px;
 }
 
-.example-form {
-  display: flex;
-  flex-direction: column;
-  width: 120%;
-}
-
-.banco-form {
-  width: 120%;
+.title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1B263B;
+  margin-bottom: 20px;
   
-  ::ng-deep .mat-mdc-text-field-wrapper {
-    background-color: transparent !important; 
-    box-shadow: none !important; 
-  }
+}
 
-  ::ng-deep .mat-mdc-form-field-flex {
-    border: none !important;
-  }
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #1B263B;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  z-index: 10;
+  transition: color 0.2s;
+}
 
-  ::ng-deep .mat-mdc-form-field-bottom-align {
-    display: none !important; 
-  }
-
-  ::ng-deep .mdc-notched-outline {
-    display: none !important; 
-  }
+.close-button:hover {
+  color: #FF4C4C;
 }
 
 
+
+
+.banco-form,
 .input-form {
   width: 100%;
-
-  ::ng-deep .mat-mdc-text-field-wrapper {
-    background-color: transparent !important;
-    box-shadow: none !important; 
-  }
-
-  ::ng-deep .mat-mdc-form-field-flex {
-    border: none !important;
-  }
-
-  ::ng-deep .mat-mdc-form-field-bottom-align {
-    display: none !important; 
-  }
-
-  ::ng-deep .mdc-notched-outline {
-    display: none !important; 
-  }
-
-  input {
-    color: black; 
-    font-size: 16px;
-    outline: none;
-    border: none;
-    background: transparent;
-  }
-
-  input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
+  margin-bottom: 20px;
 }
 
-.banco-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-#banco-desc {
-  font-size: 14px;
-  color: inherit;
+#banco-desc,
+#credenciais-desc {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
 #banco-title {
-  font-size: 16px; 
-  font-weight: bold; 
-  text-align: start;
+  font-weight: 500;
+  margin: 10px 0 5px;
+  color: #1B263B;
 }
-
-.credenciais-container {
-  flex: 1; 
-  min-width: 200px;
-  max-width: 300px;
-  display: flex;
-  flex-direction: column;
-}
-
 
 .banco-img {
-  width: 120px;
+  display: block;
+  margin: 20px auto 0;
+  max-width: 150px;
   height: auto;
-  margin-top: 1rem;
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column-reverse;
 }
 
 .actions {
   display: flex;
-  justify-content: center; 
-  align-items: flex-end; 
-  gap: 20px; 
-  margin-top: 20px;
-  width: 100%;
+  justify-content: center;
+  margin-top: 30px;
 }
 
-button {
-  flex: 1;
-  max-width: 200px; 
-  padding: 12px 24px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
+
+.button-verify-and-save {
+  background-color: #1B263B !important;
+  color: white !important;
+  padding: 16px 36px;
+  border-radius: 20px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  margin-bottom: 15px;
+  font-size: 1.1rem;
+  transition: background-color 0.3s;
+  min-width: 250px;
 }
 
-button[mat-button] {
-  background-color: red;
-  color: white;
-}
 
-button[mat-flat-button] {
-  background-color: #007bff;
-  color: white;
-}
-
-button:hover {
-  opacity: 0.8;
+.button-verify-and-save:hover {
+  background-color: #162133 !important;
 }
