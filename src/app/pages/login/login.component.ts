@@ -34,32 +34,32 @@ export class LoginComponent {
   constructor(private service: UserService, private router : Router) {}
 
   onSubmit() {
-    // this.service.login(this.email, this.password).subscribe({
-    //   next: (response) => {
-    //     console.log('Login bem-sucedido:', response);
+    this.service.login(this.email, this.password).subscribe({
+      next: (response) => {
+        console.log('Login bem-sucedido:', response);
         
-    //     localStorage.setItem('authToken', response.token);
-    //     localStorage.setItem('nome', response.nome);
-    //     localStorage.setItem('email', response.email)
+        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('nome', response.nome);
+        localStorage.setItem('email', response.email)
         
-    //     this.router.navigate(['/home']);
-    //   },
-    //   error: (error) => {
-    //     console.error('Erro no login:', error);
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error('Erro no login:', error);
   
-    //     if (error.status === 401) {
-    //       this.errorMessage = 'E-mail ou senha incorretos.';
-    //     } else {
-    //       this.errorMessage = 'Ocorreu um erro. Tente novamente mais tarde.';
-    //     }
-    //   }
-    // });
+        if (error.status === 401) {
+          this.errorMessage = 'E-mail ou senha incorretos.';
+        } else {
+          this.errorMessage = 'Ocorreu um erro. Tente novamente mais tarde.';
+        }
+      }
+    });
 
-    localStorage.setItem('authToken', 'testeToken');
-    localStorage.setItem('nome', 'Arthur Bighetto');
-    localStorage.setItem('email', 'arthurbighetto36@gmail.com')
-    this.router.navigate(['/home']);
-  // 
+    // localStorage.setItem('authToken', 'testeToken');
+    // localStorage.setItem('nome', 'Arthur Bighetto');
+    // localStorage.setItem('email', 'arthurbighetto36@gmail.com')
+    // this.router.navigate(['/home']);
+  
   }
 
   esqueciMinhaSenha(){

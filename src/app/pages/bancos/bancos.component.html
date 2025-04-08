@@ -1,5 +1,18 @@
-<h4 class="welcome">Bem-vindo, {{nome}}!</h4>
+<h4 class="welcome">Bem-vindo(a), {{ nome }}!</h4>
 
-<mat-card class="icon-card" (click)="abrirRegistroBanco()">
-  <mat-icon class="icon">add_box</mat-icon>
-</mat-card>
+<div class="card-container">
+
+  <mat-card *ngFor="let banco of bancos" class="icon-card">
+    <img
+      [src]="bankLogoMap[banco.bankName] || 'assets/default-logo.png'"
+      alt="Logo {{ banco.bankName }}"
+      style="width: 60px; height: 60px;"
+    >
+    <p>{{ banco.bankName }}</p>
+  </mat-card>
+  <mat-card class="icon-card" (click)="abrirRegistroBanco()">
+    <mat-icon class="icon">add_box</mat-icon>
+  </mat-card>
+
+  
+</div>
