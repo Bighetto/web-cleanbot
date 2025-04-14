@@ -1,0 +1,97 @@
+<div class="container">
+    <mat-card class="configuration-card">
+      <button mat-raised-button color="primary" class="button">
+        <mat-icon class="icon">upload_file</mat-icon>
+        Adicionar arquivo .CSV
+      </button>
+  
+      <mat-card class="configuracoes">
+        <h4>Configurações</h4>
+        <p>CPFs: <strong>12890</strong></p>
+        <p>Usuários: <strong>3</strong></p>
+        <p>Delay (Segundos): <strong>2</strong></p>
+        <p>Tabela: <strong>Normal</strong></p>
+  
+        <mat-checkbox checked>Data e hora de término</mat-checkbox>
+        <p><strong>25/04</strong> - <strong>07:30</strong></p>
+      </mat-card>
+  
+      <button mat-raised-button color="accent" class="btn-iniciar">Iniciar</button>
+      <button mat-raised-button color="warn" class="btn-parar">Parar e zerar</button>
+    </mat-card>
+  
+    <div class="conteudo">
+      <div class="usuarios">
+        <button mat-raised-button class="button">
+          <mat-icon class="icon">person_add</mat-icon> Usuário
+        </button>
+        <span>Selecione os usuários:</span>
+        <mat-form-field appearance="fill" style="min-width: 300px;">
+          <mat-select multiple>
+            <mat-option *ngFor="let usuario of ['Usuario1', 'Usuario2', 'Usuario3']" [value]="usuario">
+              {{ usuario }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div class="resumo">
+        <mat-card class="card">
+          <div class="card-content">
+            <mat-icon>assignment</mat-icon>
+            <p>CPFs Consultados:</p>
+          </div>
+          <h3>0</h3>
+        </mat-card>
+      
+        <mat-card class="card">
+          <div class="card-content">
+            <mat-icon>account_balance_wallet</mat-icon>
+            <p>Saldos:</p>
+          </div>
+          <h3>0</h3>
+        </mat-card>
+      
+        <mat-card class="card">
+          <div class="card-content">
+            <mat-icon>block</mat-icon>
+            <p>Não Autorizado:</p>
+          </div>
+          <h3>0</h3>
+        </mat-card>
+      
+        <mat-card class="card">
+          <div class="card-content">
+            <mat-icon>visibility_off</mat-icon>
+            <p>Sem saldo:</p>
+          </div>
+          <h3>0</h3>
+        </mat-card>
+      
+        <mat-card class="card">
+          <div class="card-content">
+            <mat-icon>error</mat-icon>
+            <p>Erros:</p>
+          </div>
+          <h3>0</h3>
+        </mat-card>
+      </div>
+      
+      
+  
+      <div class="acoes-resumo">
+        <button mat-raised-button color="primary" class="button">
+          <mat-icon>download</mat-icon> Exportar
+        </button>
+        <button mat-raised-button color="warn" class="btn-parar">Zerar resultados</button>
+      </div>
+  
+      <div class="log">
+        <h5>Log de consultas:</h5>
+        <mat-card class="log-conteudo">
+          <p>Nenhuma consulta ainda.</p>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  

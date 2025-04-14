@@ -8,12 +8,14 @@ import { Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { BancoService } from '../../services/banco.service';
 import { BankUserResponse } from '../../models/bank.user.response.model';
+import { Router, RouterModule } from '@angular/router';
+import { BancoStorageService } from '../../services/banco-storage-service.service';
 
 
 @Component({
   selector: 'app-bancos',
   standalone: true,
-  imports: [MatCardModule, MatIcon, CommonModule],
+  imports: [MatCardModule, MatIcon, CommonModule,RouterModule],
   templateUrl: './bancos.component.html',
   styleUrl: './bancos.component.scss'
 })
@@ -30,7 +32,12 @@ export class BancosComponent implements OnInit {
   };
   
 
-  constructor(private dialog: MatDialog, @Inject(PLATFORM_ID) private platformId: Object, private bancoService: BancoService) {
+  constructor(
+    private dialog: MatDialog, 
+    @Inject(PLATFORM_ID) private platformId: Object, 
+    private bancoService: BancoService, 
+    private router : Router, 
+    private bancoStorage: BancoStorageService) {
     if (isPlatformBrowser(this.platformId)) {
       this.authToken = localStorage.getItem('authToken') || '';
       this.nome = localStorage.getItem('nome') || 'Usuário';
@@ -44,6 +51,8 @@ export class BancosComponent implements OnInit {
   }
   bancos: BankUserResponse[] = [];
 
+  userBancos : BankUserResponse[] = [];
+
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -54,6 +63,7 @@ export class BancosComponent implements OnInit {
         next: (res) => {
           const nomesUnicos = new Set();
           this.bancos = res.filter(banco => {
+            this.userBancos.push(banco)
             if (!nomesUnicos.has(banco.bankName)) {
               nomesUnicos.add(banco.bankName);
               return true;
@@ -67,6 +77,10 @@ export class BancosComponent implements OnInit {
         }
       });
     }
+  }
+
+  redirecionarParaBanco(nomeBanco: string) {
+    this.router.navigate(['/home/detalhes-banco/', nomeBanco]);
   }
   
 

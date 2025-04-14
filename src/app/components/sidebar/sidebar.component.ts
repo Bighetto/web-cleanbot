@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
     MatSidenavModule, 
     MatListModule,    
     MatIconModule,
-    RouterOutlet
   ],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']

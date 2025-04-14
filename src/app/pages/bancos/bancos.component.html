@@ -2,7 +2,10 @@
 
 <div class="card-container">
 
-  <mat-card *ngFor="let banco of bancos" class="icon-card">
+  <mat-card *ngFor="let banco of bancos" 
+    class="icon-card"
+    (click)="redirecionarParaBanco(banco.bankName)"
+    style="cursor: pointer;">
     <img
       [src]="bankLogoMap[banco.bankName] || 'assets/default-logo.png'"
       alt="Logo {{ banco.bankName }}"
