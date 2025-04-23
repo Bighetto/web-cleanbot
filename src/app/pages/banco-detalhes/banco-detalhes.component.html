@@ -1,7 +1,20 @@
 <div class="container">
     <mat-card class="configuration-card">
-      <button mat-raised-button color="primary" class="button">
-        <mat-icon class="icon">upload_file</mat-icon>
+      <input
+        type="file"
+        accept=".csv"
+        #fileInput
+        hidden
+        (change)="onFileSelected($event)"
+      />
+      
+      <button
+        mat-raised-button
+        color="primary"
+        class="button"
+        (click)="fileInput.click()"
+      >
+        <mat-icon>upload_file</mat-icon>
         Adicionar arquivo .CSV
       </button>
   
