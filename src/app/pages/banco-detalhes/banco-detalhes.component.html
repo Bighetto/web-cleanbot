@@ -41,8 +41,8 @@
         <span>Selecione os usuários:</span>
         <mat-form-field appearance="fill" style="min-width: 300px;">
           <mat-select multiple>
-            <mat-option *ngFor="let usuario of ['Usuario1', 'Usuario2', 'Usuario3']" [value]="usuario">
-              {{ usuario }}
+            <mat-option *ngFor="let usuario of usuarios" [value]="usuario">
+              {{ usuario.nickname }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -101,7 +101,13 @@
   
       <div class="log">
         <h5>Log de consultas:</h5>
-        <mat-card class="log-conteudo">
+        <mat-card class="log-conteudo" *ngIf="logConsultas.length > 0">
+          <div *ngFor="let log of logConsultas">
+            <p>{{ log }}</p>
+          </div>
+        </mat-card>
+      
+        <mat-card class="log-conteudo" *ngIf="logConsultas.length === 0">
           <p>Nenhuma consulta ainda.</p>
         </mat-card>
       </div>

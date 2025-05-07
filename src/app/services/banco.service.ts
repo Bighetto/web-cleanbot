@@ -17,24 +17,24 @@ export class BancoService {
 
   findBankUser(email: string, token: string): Observable<BankUserResponse[]> {
 
-    // const headers = new HttpHeaders({
-    //   token: `${token}`
-    // });
-    // return this.http.get<BankUserResponse[]>(
-    //   this.apiUrl.concat(email),
-    //   { headers }).pipe(
-    //   catchError((error) => {
-    //     throw error; 
-    //   })
-    // );
+    const headers = new HttpHeaders({
+      token: `${token}`
+    });
+    return this.http.get<BankUserResponse[]>(
+      this.apiUrl.concat(email),
+      { headers }).pipe(
+      catchError((error) => {
+        throw error; 
+      })
+    );
 
-    const responseMock: BankUserResponse = {
-      id: '123456',
-      bankName: 'V8 Digital',
-      username: 'Teste',
-      nickname: 'Testee',
-    };
+    // const responseMock: BankUserResponse = {
+    //   id: '123456',
+    //   bankName: 'V8 Digital',
+    //   username: 'Teste',
+    //   nickname: 'Testee',
+    // };
 
-    return of([responseMock, responseMock])
+    // return of([responseMock, responseMock])
   }
 }
