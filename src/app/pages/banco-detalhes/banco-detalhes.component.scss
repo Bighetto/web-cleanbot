@@ -169,7 +169,8 @@
   }
   
   .log-conteudo {
-    height: 300px;               
+    height: 400px;
+    overflow-y: auto;             
     background-color: #fff;
     padding: 20px;
     width: 100%;

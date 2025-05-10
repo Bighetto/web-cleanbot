@@ -89,7 +89,7 @@ export class BancosComponent implements OnInit {
   abrirRegistroBanco() {
     this.dialog.open(BancoRegistroComponent, {
       width: '80vw',
-      height: '80vh', 
+      height: '65vh', 
       maxWidth: '1000px',
       disableClose: false,
       panelClass: 'custom-dialog-container'

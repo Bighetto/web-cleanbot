@@ -35,9 +35,10 @@
   
     <div class="conteudo">
       <div class="usuarios">
-        <button mat-raised-button class="button">
+        <button mat-raised-button (click)="abrirRegistroBanco()" class="button">
           <mat-icon class="icon">person_add</mat-icon> Usuário
         </button>
+        
         <span>Selecione os usuários:</span>
         <mat-form-field appearance="fill" style="min-width: 300px;">
           <mat-select multiple>
@@ -100,7 +101,7 @@
       </div>
   
       <div class="log">
-        <h5>Log de consultas:</h5>
+        <h5>Histórico de consultas:</h5>
         <mat-card class="log-conteudo" *ngIf="logConsultas.length > 0">
           <div *ngFor="let log of logConsultas">
             <p>{{ log }}</p>
@@ -110,7 +111,7 @@
         <mat-card class="log-conteudo" *ngIf="logConsultas.length === 0">
           <p>Nenhuma consulta ainda.</p>
         </mat-card>
-      </div>
+      </div>      
     </div>
   </div>
   

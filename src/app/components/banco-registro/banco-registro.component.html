@@ -7,7 +7,7 @@
 
 <div class="container">
 
-  <div class="banco-container">
+  <div class="banco-container" *ngIf="mostrarSelecaoBanco">
     <p id="banco-desc">Selecione o banco que deseja adicionar</p>
     <p id="banco-title">Banco</p>
     <mat-form-field appearance="outline" class="banco-form">
@@ -41,6 +41,7 @@
       <input matInput placeholder="Digite seu apelido">
     </mat-form-field>
   </div>
+  
 
 </div>
 

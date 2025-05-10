@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -18,7 +19,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatSelectModule,
     MatIcon,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './banco-registro.component.html',
   styleUrls: ['./banco-registro.component.scss']
@@ -32,7 +34,19 @@ export class BancoRegistroComponent {
   password: string = '';
   nickname: string = '';
 
-  constructor(private dialogRef: MatDialogRef<BancoRegistroComponent>) {}
+  mostrarSelecaoBanco: boolean = true;
+
+
+  constructor(private dialogRef: MatDialogRef<BancoRegistroComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+
+    if (data?.mostrarSelecaoBanco === false) {
+      this.mostrarSelecaoBanco = false;
+      this.bancoSelecionado = 'V8';
+    }
+
+  }
 
   atualizarImagem() {
     if (this.bancoSelecionado === 'V8') {
