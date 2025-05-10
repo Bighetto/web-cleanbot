@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
-import { LoginResponse } from '../models/login.response.model';
 import { BankUserResponse } from '../models/bank.user.response.model';
 
 @Injectable({
