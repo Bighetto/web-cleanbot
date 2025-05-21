@@ -53,6 +53,8 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   mostrarSelecaoBanco: boolean = false; 
 
+  processoIdAtivo: string = ""
+
   private websocketSubscription: Subscription | null = null;
 
   constructor(
@@ -187,18 +189,38 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   executeProcessing(){
     const usuariosIds = this.usuariosSelecionados.map(usuario => usuario.id);
-    console.log(usuariosIds)
-    console.log(this.csvId)
     this.service.executarProcessamento(this.csvId, this.email, usuariosIds).subscribe({
       next: (processoId) => {
         console.log('Processo iniciado com ID:', processoId);
+        this.processoIdAtivo = processoId;         
+        localStorage.setItem('processoIdAtivo', processoId);
       },
       error: (err) => {
         console.error('Erro ao iniciar processamento.');
       }
     });
-    
   }
+
+  pararProcesso() {
+    const processoId: string | null = this.processoIdAtivo ?? localStorage.getItem('processoIdAtivo');
+    console.log(processoId)
+    if (!processoId) {
+      console.warn('Nenhum processo ativo para pausar.');
+      return;
+    }
+  
+    this.service.pararProcessamento(processoId).subscribe({
+      next: (msg) => {
+        console.log(msg);
+        alert(msg);
+        localStorage.removeItem('processoIdAtivo');
+      },
+      error: (err) => {
+        console.error('Erro ao tentar parar o processo:', err);
+      }
+    });
+  }
+  
 
 
   onFileSelected(event: Event) {

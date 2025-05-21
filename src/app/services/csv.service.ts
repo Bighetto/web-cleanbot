@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { FindCsvStatusRestModel } from '../models/find.csv.status.rest.model';
 
 @Injectable({
@@ -38,21 +38,29 @@ export class CsvService {
     return this.http.get<FindCsvStatusRestModel>(url);
   }
 
-  executarProcessamento(csvId: string, email: string ,usuarios: string[]): Observable<string> {
-    const body = {
-      csvId: csvId,
-      email: email,
-      usuarios: usuarios
-    };
-  
-    return this.http.post<string>(
+  executarProcessamento(csvId: string, email: string, usuarios: string[]): Observable<string> {
+    const body = { csvId, email, usuarios };
+    
+    return this.http.post<{ processoId: string }>(
       `${this.apiUrl}/executar`,
       body
     ).pipe(
+      map(response => response.processoId),
       catchError((error) => {
         throw error;
       })
     );
   }
+
+  
+  pararProcessamento(processoId: string): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/parar/${processoId}`, {})
+      .pipe(
+        catchError(error => {
+          throw error;
+        })
+      );
+  }
+  
   
 }
