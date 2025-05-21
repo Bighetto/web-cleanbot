@@ -1,7 +1,7 @@
 import { ResultsCounterExecutionRestModel } from "./results.counter.execution.rest.model";
 
 export interface FindCsvStatusRestModel {
-    idCsv: number;
+    idCsv: string;
     status: string;
     results: ResultsCounterExecutionRestModel;
   }

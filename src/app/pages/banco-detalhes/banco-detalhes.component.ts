@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { WebSocketService } from '../../services/web-socket-service.service';
 import { BancoRegistroComponent } from '../../components/banco-registro/banco-registro.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-banco-detalhes',
@@ -25,7 +26,8 @@ import { MatDialog } from '@angular/material/dialog';
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule
   ],
   templateUrl: './banco-detalhes.component.html',
   styleUrls: ['./banco-detalhes.component.scss']
@@ -42,6 +44,14 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   naoAutorizado = 0;
   semSaldo = 0;
   erros = 0;
+
+  csvId = '';
+  quantidadeCpfs = '';
+  quantidadeUsuariosExecutar: number = 0;
+  usuariosSelecionados: any[] = [];
+
+
+
 
   mostrarSelecaoBanco: boolean = false; 
 
@@ -81,6 +91,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     if (this.email) {
       this.service.buscarStatusPorEmail(this.email).subscribe({
         next: (status) => {
+          this.csvId = status.idCsv
           this.cpfsConsultados = status.results.total_consultas || 0;
           this.saldos = status.results.com_saldo || 0;
           this.naoAutorizado = status.results.nao_autorizado || 0;
@@ -101,6 +112,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     // Assinar para receber mensagens do WebSocket
     this.websocketSubscription = this.webSocketService.messages$.subscribe((message: string) => {
       this.logConsultas.push(message);
+      this.processarMensagemWebSocket(message);
       console.log('Mensagem recebida:', message);
       if (this.logConsultas.length > 20) {
         this.logConsultas.shift(); // Remove a primeira mensagem (mais antiga)
@@ -127,6 +139,69 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     }
   }
 
+  processarMensagemWebSocket(mensagem: string): void {
+  
+    const resultadoRegex = /RESULTADO:\s*(.*)$/i;
+    const match = mensagem.match(resultadoRegex);
+  
+    if (!match || !match[1]) {
+      return;
+    }
+  
+    const resultadoRaw = match[1].trim();
+  
+    const valorNumerico = parseFloat(resultadoRaw.replace(',', '.'));
+  
+    if (!isNaN(valorNumerico)) {
+      this.cpfsConsultados++;
+      this.saldos ++;
+      return;
+    }
+  
+    const resultado = resultadoRaw.toUpperCase();
+  
+    switch (resultado) {
+      case 'NÃO AUTORIZADO':
+        this.cpfsConsultados++;
+        this.naoAutorizado++;
+        break;
+      case 'SEM SALDO':
+        this.cpfsConsultados++;
+        this.semSaldo++;
+        break;
+      case 'CPF INVÁLIDO':
+      case 'ERRO NA REQUISIÇÃO':
+        this.cpfsConsultados++;
+        this.erros++;
+        break;
+      default:
+        this.cpfsConsultados++;
+        this.erros++;
+        break;
+    }
+  }
+  
+
+
+  onUsuariosSelecionadosChange() {
+    this.quantidadeUsuariosExecutar = this.usuariosSelecionados.length;
+  }
+
+  executeProcessing(){
+    const usuariosIds = this.usuariosSelecionados.map(usuario => usuario.id);
+    console.log(usuariosIds)
+    console.log(this.csvId)
+    this.service.executarProcessamento(this.csvId, usuariosIds).subscribe({
+      next: (processoId) => {
+        console.log('Processo iniciado com ID:', processoId);
+      },
+      error: (err) => {
+        console.error('Erro ao iniciar processamento.');
+      }
+    });
+    
+  }
+
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -142,7 +217,8 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
       this.service.uploadFile(file, this.email).subscribe({
         next: (res) => {
-          console.log('Upload feito com sucesso!', res);
+          console.log(res)
+          this.csvId = res.csvId
         },
         error: (err) => {
           console.error('Falha no upload', err);

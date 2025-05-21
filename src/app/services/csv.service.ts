@@ -37,4 +37,21 @@ export class CsvService {
     const url = `${this.apiUrl}/status/${encodeURIComponent(email)}`;
     return this.http.get<FindCsvStatusRestModel>(url);
   }
+
+  executarProcessamento(csvId: string, usuarios: string[]): Observable<string> {
+    const body = {
+      csvId: csvId,
+      usuarios: usuarios
+    };
+  
+    return this.http.post<string>(
+      `${this.apiUrl}/executar`,
+      body
+    ).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
+  
 }
