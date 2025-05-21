@@ -36,7 +36,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   nomeBanco: string | null = null;
   usuarios: BankUserResponse[] = [];
   nome: string | null = null;
-  email: string | null = null;
+  email: string;
   logConsultas: string[] = [];  
 
   cpfsConsultados = 0;
@@ -49,16 +49,11 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   quantidadeCpfs = 0;
   quantidadeUsuariosExecutar: number = 0;
   usuariosSelecionados: any[] = [];
-
-
-
+  botaoTexto: string = 'Iniciar';
 
   mostrarSelecaoBanco: boolean = false; 
 
   private websocketSubscription: Subscription | null = null;
-
-  private socketMessages: string[] = []; 
-
 
   constructor(
     private route: ActivatedRoute, 
@@ -91,16 +86,16 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     if (this.email) {
       this.service.buscarStatusPorEmail(this.email).subscribe({
         next: (status) => {
-          this.quantidadeCpfs = status.quantidadeDocumentos
-          this.csvId = status.idCsv
+          this.quantidadeCpfs = status.quantidadeDocumentos;
+          this.csvId = status.idCsv;
           this.cpfsConsultados = status.results.total_consultas || 0;
           this.saldos = status.results.com_saldo || 0;
           this.naoAutorizado = status.results.nao_autorizado || 0;
           this.semSaldo = status.results.sem_saldo || 0;
           this.erros = status.results.erro || 0;
         },
-        error: (err) => {
-          this.quantidadeCpfs = 0
+        error: () => {
+          this.quantidadeCpfs = 0;
           this.cpfsConsultados = 0;
           this.saldos = 0;
           this.naoAutorizado = 0;
@@ -108,19 +103,20 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
           this.erros = 0;
         }
       });
-    }    
-    this.webSocketService.connect();
-
-    // Assinar para receber mensagens do WebSocket
-    this.websocketSubscription = this.webSocketService.messages$.subscribe((message: string) => {
-      this.logConsultas.push(message);
-      this.processarMensagemWebSocket(message);
-      console.log('Mensagem recebida:', message);
-      if (this.logConsultas.length > 20) {
-        this.logConsultas.shift(); // Remove a primeira mensagem (mais antiga)
-      }
-    });
+  
+      this.webSocketService.connect(this.email);
+  
+      this.websocketSubscription = this.webSocketService.messages$.subscribe((message: string) => {
+        this.logConsultas.push(message);
+        this.processarMensagemWebSocket(message);
+        console.log('Mensagem recebida:', message);
+        if (this.logConsultas.length > 20) {
+          this.logConsultas.shift();
+        }
+      });
+    }
   }
+  
 
   ngOnDestroy(): void {
     if (this.websocketSubscription) {
@@ -193,7 +189,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     const usuariosIds = this.usuariosSelecionados.map(usuario => usuario.id);
     console.log(usuariosIds)
     console.log(this.csvId)
-    this.service.executarProcessamento(this.csvId, usuariosIds).subscribe({
+    this.service.executarProcessamento(this.csvId, this.email, usuariosIds).subscribe({
       next: (processoId) => {
         console.log('Processo iniciado com ID:', processoId);
       },
@@ -232,7 +228,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   abrirRegistroBanco() {
     this.dialog.open(BancoRegistroComponent, {
       width: '50vw',
-      height: '65vh',
+      height: '85vh',
       maxWidth: '450px',
       disableClose: false,
       panelClass: 'custom-dialog-container',
