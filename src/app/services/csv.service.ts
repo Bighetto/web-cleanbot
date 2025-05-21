@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
+import { FindCsvStatusRestModel } from '../models/find.csv.status.rest.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,11 @@ export class CsvService {
 
   constructor(private http: HttpClient) {}
 
-  uploadFile(file: File, email: string, token: string): Observable<any> {
+  uploadFile(file: File, email: string): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
 
     const headers = new HttpHeaders({
-      token: `${token}`,
       email: `${email}`
     });
 
@@ -31,5 +31,10 @@ export class CsvService {
         throw error;
       })
     );
+  }
+
+  buscarStatusPorEmail(email: string): Observable<FindCsvStatusRestModel> {
+    const url = `${this.apiUrl}/status/${encodeURIComponent(email)}`;
+    return this.http.get<FindCsvStatusRestModel>(url);
   }
 }

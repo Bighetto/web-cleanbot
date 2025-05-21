@@ -14,14 +14,10 @@ export class BancoService {
 
   constructor(private http: HttpClient) {}
 
-  findBankUser(email: string, token: string): Observable<BankUserResponse[]> {
+  findBankUser(email: string): Observable<BankUserResponse[]> {
 
-    const headers = new HttpHeaders({
-      token: `${token}`
-    });
     return this.http.get<BankUserResponse[]>(
-      this.apiUrl.concat(email),
-      { headers }).pipe(
+      this.apiUrl.concat(email)).pipe(
       catchError((error) => {
         throw error; 
       })

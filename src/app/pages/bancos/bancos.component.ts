@@ -57,9 +57,8 @@ export class BancosComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const email = localStorage.getItem('email') || '';
-      const token = localStorage.getItem('authToken') || '';
   
-      this.bancoService.findBankUser(email, token).subscribe({
+      this.bancoService.findBankUser(email).subscribe({
         next: (res) => {
           const nomesUnicos = new Set();
           this.bancos = res.filter(banco => {

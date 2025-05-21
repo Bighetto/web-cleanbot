@@ -33,10 +33,15 @@ import { MatDialog } from '@angular/material/dialog';
 export class BancoDetalhesComponent implements OnInit, OnDestroy {
   nomeBanco: string | null = null;
   usuarios: BankUserResponse[] = [];
-  authToken: string | null = null;
   nome: string | null = null;
   email: string | null = null;
   logConsultas: string[] = [];  
+
+  cpfsConsultados = 0;
+  saldos = 0;
+  naoAutorizado = 0;
+  semSaldo = 0;
+  erros = 0;
 
   mostrarSelecaoBanco: boolean = false; 
 
@@ -50,7 +55,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     private router: Router, 
     private service: CsvService, 
     @Inject(PLATFORM_ID) private platformId: Object,
-    private webSocketService: WebSocketService,  // Injetando o serviço WebSocket
+    private webSocketService: WebSocketService, 
     private dialog: MatDialog, 
 
 
@@ -61,11 +66,9 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     });
 
     if (isPlatformBrowser(this.platformId)) {
-      this.authToken = localStorage.getItem('authToken') || '';
       this.nome = localStorage.getItem('nome') || 'Usuário';
       this.email = localStorage.getItem('email') || '';
     } else {
-      this.authToken = '';
       this.nome = 'Usuário';
       this.email = '';
     }
@@ -75,7 +78,24 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Conectar ao WebSocket
+    if (this.email) {
+      this.service.buscarStatusPorEmail(this.email).subscribe({
+        next: (status) => {
+          this.cpfsConsultados = status.results.total_consultas || 0;
+          this.saldos = status.results.com_saldo || 0;
+          this.naoAutorizado = status.results.nao_autorizado || 0;
+          this.semSaldo = status.results.sem_saldo || 0;
+          this.erros = status.results.erro || 0;
+        },
+        error: (err) => {
+          this.cpfsConsultados = 0;
+          this.saldos = 0;
+          this.naoAutorizado = 0;
+          this.semSaldo = 0;
+          this.erros = 0;
+        }
+      });
+    }    
     this.webSocketService.connect();
 
     // Assinar para receber mensagens do WebSocket
@@ -97,8 +117,8 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   // Função para enviar uma mensagem via WebSocket
   sendMessage(): void {
-    if (this.email && this.authToken) {
-      const message = { email: this.email, token: this.authToken, text: 'Mensagem do WebSocket' };
+    if (this.email) {
+      const message = { email: this.email, text: 'Mensagem do WebSocket' };
       this.webSocketService.sendMessage(message);
       console.log('Mensagem enviada:', message);
       
@@ -115,12 +135,12 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
       const file = input.files[0];
       console.log('Arquivo selecionado:', file);
 
-      if (!this.email || !this.authToken) {
-        console.error('Email ou token ausente!');
+      if (!this.email) {
+        console.error('Email ausente!');
         return;
       }
 
-      this.service.uploadFile(file, this.email, this.authToken).subscribe({
+      this.service.uploadFile(file, this.email).subscribe({
         next: (res) => {
           console.log('Upload feito com sucesso!', res);
         },
