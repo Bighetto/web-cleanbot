@@ -46,7 +46,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   erros = 0;
 
   csvId = '';
-  quantidadeCpfs = '';
+  quantidadeCpfs = 0;
   quantidadeUsuariosExecutar: number = 0;
   usuariosSelecionados: any[] = [];
 
@@ -91,6 +91,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     if (this.email) {
       this.service.buscarStatusPorEmail(this.email).subscribe({
         next: (status) => {
+          this.quantidadeCpfs = status.quantidadeDocumentos
           this.csvId = status.idCsv
           this.cpfsConsultados = status.results.total_consultas || 0;
           this.saldos = status.results.com_saldo || 0;
@@ -99,6 +100,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
           this.erros = status.results.erro || 0;
         },
         error: (err) => {
+          this.quantidadeCpfs = 0
           this.cpfsConsultados = 0;
           this.saldos = 0;
           this.naoAutorizado = 0;

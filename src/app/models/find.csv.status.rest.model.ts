@@ -3,5 +3,6 @@ import { ResultsCounterExecutionRestModel } from "./results.counter.execution.re
 export interface FindCsvStatusRestModel {
     idCsv: string;
     status: string;
+    quantidadeDocumentos : number;
     results: ResultsCounterExecutionRestModel;
   }
