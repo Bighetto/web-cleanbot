@@ -8,6 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { BancoService } from '../../services/banco.service';
+import { UploadBankUserRestModel } from '../../models/upload.bank.user.restmodel';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-banco-registro',
@@ -20,7 +23,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     MatIcon,
     FormsModule,
-    CommonModule
+    CommonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './banco-registro.component.html',
   styleUrls: ['./banco-registro.component.scss']
@@ -34,11 +38,16 @@ export class BancoRegistroComponent {
   password: string = '';
   nickname: string = '';
 
+  isLoading: boolean = false;
+  mensagemSucesso: string | null = null;
+
+
   mostrarSelecaoBanco: boolean = true;
 
 
   constructor(private dialogRef: MatDialogRef<BancoRegistroComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private bancoService: BancoService
   ) {
 
     if (data?.mostrarSelecaoBanco === false) {
@@ -62,7 +71,44 @@ export class BancoRegistroComponent {
   }
 
   salvarBanco() {
-    console.log("Banco salvo!");
-    this.fechar();
+    if (!this.bancoSelecionado || !this.login || !this.password) {
+      alert('Preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    const userEmail = localStorage.getItem('email');
+
+    if (!userEmail) {
+      alert('Erro ao registrar usuario.');
+      return;
+    }
+  
+    this.isLoading = true;
+    this.mensagemSucesso = null;
+  
+    const payload: UploadBankUserRestModel = {
+      bankName: this.bancoSelecionado,
+      login: this.login,
+      password: this.password,
+      nickname: this.nickname,
+      userEmail: userEmail
+    };
+
+    console.log(payload)
+  
+    this.bancoService.salvarBanco(payload).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.mensagemSucesso = 'Usuário cadastrado com sucesso!';
+        setTimeout(() => {
+          this.fechar();
+        }, 1500);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.error('Erro ao salvar banco:', err);
+      }
+    });
   }
+  
 }

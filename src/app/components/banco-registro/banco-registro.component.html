@@ -5,46 +5,63 @@
 
   <h4 class="title">Adicionar Banco</h4>
 
-<div class="container">
+  <div class="container">
 
-  <div class="banco-container" *ngIf="mostrarSelecaoBanco">
-    <p id="banco-desc">Selecione o banco que deseja adicionar</p>
-    <p id="banco-title">Banco</p>
-    <mat-form-field appearance="outline" class="banco-form">
-      <mat-select [(value)]="bancoSelecionado" (selectionChange)="atualizarImagem()">
-        <mat-option value="V8">V8 Digital</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="banco-container" *ngIf="mostrarSelecaoBanco">
+      <p id="banco-desc">Selecione o banco que deseja adicionar</p>
+      <p id="banco-title">Banco</p>
+      <mat-form-field appearance="outline" class="banco-form">
+        <mat-select [(value)]="bancoSelecionado" (selectionChange)="atualizarImagem()">
+          <mat-option value="V8 Digital">V8 Digital</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    @if (imagemBanco) {
-      <img [src]="imagemBanco" alt="Logo do Banco" class="banco-img">
-    }
+      <img *ngIf="imagemBanco" [src]="imagemBanco" alt="Logo do Banco" class="banco-img">
+    </div>
+
+    <!-- Credenciais -->
+    <div class="credenciais-container">
+      <p id="credenciais-desc">Digite as credenciais do usuário que deseja adicionar.</p>
+
+      <mat-form-field appearance="outline" class="input-form">
+        <mat-label>Login</mat-label>
+        <input matInput placeholder="Digite seu login" [(ngModel)]="login" name="login" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-form">
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="hide ? 'Mostrar senha' : 'Ocultar senha'" type="button">
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-form">
+        <mat-label>Apelido</mat-label>
+        <input matInput placeholder="Digite seu apelido" [(ngModel)]="nickname" name="nickname" />
+      </mat-form-field>
+    </div>
+
   </div>
 
-  <div class="credenciais-container">
-    <p id="credenciais-desc">Digite as credenciais do usuario que deseja adicionar.</p>
-    <mat-form-field appearance="outline" class="input-form">
-      <mat-label>Login</mat-label>
-      <input matInput placeholder="Digite seu login">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="input-form">
-      <mat-label>Senha</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required />
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="hide ? 'Mostrar senha' : 'Ocultar senha'" type="button">
-        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-      </button>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="input-form">
-      <mat-label>Apelido</mat-label>
-      <input matInput placeholder="Digite seu apelido">
-    </mat-form-field>
+  <div class="actions">
+    <button 
+      mat-flat-button 
+      class="button-verify-and-save" 
+      color="primary" 
+      (click)="salvarBanco()" 
+      [disabled]="isLoading">
+      <ng-container *ngIf="!isLoading; else loading">
+        Verificar e Salvar
+      </ng-container>
+      <ng-template #loading>
+        <mat-spinner diameter="20"></mat-spinner>
+      </ng-template>
+    </button>
   </div>
   
-
-</div>
-
-<div class="actions">
-  <button mat-flat-button class="button-verify-and-save" color="primary" (click)="salvarBanco()">Verificar e Salvar</button>
+  <div *ngIf="mensagemSucesso" class="mensagem-sucesso">
+    {{ mensagemSucesso }}
+  </div>
+  
 </div>
