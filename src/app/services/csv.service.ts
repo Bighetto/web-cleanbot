@@ -53,8 +53,8 @@ export class CsvService {
   }
 
   
-  pararProcessamento(processoId: string): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/parar/${processoId}`, {})
+  pararProcessamento(email: string): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/parar/${email}`, {})
       .pipe(
         catchError(error => {
           throw error;

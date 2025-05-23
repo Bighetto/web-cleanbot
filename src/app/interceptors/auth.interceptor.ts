@@ -11,11 +11,14 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
     const token = authService.getToken();
     console.log('PASSOU PELO INTERCEPTOR')
 
-    if (token) {
+    const isAuthEndpoint = req.url.includes('/user/authenticate');
+
+
+    if (token && !isAuthEndpoint) {
         const authReq = req.clone({
             headers: req.headers.set('Authorization', `Bearer ${token}`)
         });
-        console.log(authReq)
+        console.log(authReq);
         return next(authReq).pipe(
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 401 || error.status === 403) {

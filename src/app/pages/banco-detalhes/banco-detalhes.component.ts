@@ -53,8 +53,6 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   mostrarSelecaoBanco: boolean = false; 
 
-  processoIdAtivo: string = ""
-
   private websocketSubscription: Subscription | null = null;
 
   constructor(
@@ -192,7 +190,6 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     this.service.executarProcessamento(this.csvId, this.email, usuariosIds).subscribe({
       next: (processoId) => {
         console.log('Processo iniciado com ID:', processoId);
-        this.processoIdAtivo = processoId;         
         localStorage.setItem('processoIdAtivo', processoId);
       },
       error: (err) => {
@@ -202,14 +199,8 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   pararProcesso() {
-    const processoId: string | null = this.processoIdAtivo ?? localStorage.getItem('processoIdAtivo');
-    console.log(processoId)
-    if (!processoId) {
-      console.warn('Nenhum processo ativo para pausar.');
-      return;
-    }
   
-    this.service.pararProcessamento(processoId).subscribe({
+    this.service.pararProcessamento(this.email).subscribe({
       next: (msg) => {
         console.log(msg);
         alert(msg);
