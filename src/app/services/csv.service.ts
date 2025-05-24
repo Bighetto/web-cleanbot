@@ -61,6 +61,11 @@ export class CsvService {
         })
       );
   }
+
+  zerarResultados(email: string): Observable<string> {
+    return this.http.delete<string>(`${this.apiUrl}/zerar-resultados/${email}`);
+  }
+  
   
   
 }

@@ -254,12 +254,13 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         next: (res) => {
           console.log(res)
           this.csvId = res.csvId
-          window.location.reload();
         },
         error: (err) => {
           console.error('Falha no upload', err);
         },
       });
+
+      window.location.reload();
     }
   }
 
@@ -277,5 +278,17 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
       window.location.reload();
     });
   }
+
+  zerarResultados() {
+    this.service.zerarResultados(this.email).subscribe({
+      next: () => {
+        window.location.reload();
+      },
+      error: (err) => {
+        console.error('Erro ao zerar resultados:', err);
+      }
+    });
+  }
+  
   
 }

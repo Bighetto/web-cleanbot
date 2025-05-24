@@ -25,8 +25,8 @@
         <p>Delay (Segundos): <strong>2</strong></p>
         <p>Tabela: <strong>Normal</strong></p>
   
-        <mat-checkbox checked>Data e hora de término</mat-checkbox>
-        <p><strong>25/04</strong> - <strong>07:30</strong></p>
+        <!-- <mat-checkbox checked>Data e hora de término</mat-checkbox> TODO: IMPLEMENTAR POSTERIORMENTE
+        <p><strong>25/04</strong> - <strong>07:30</strong></p> -->
       </mat-card>
   
       <button mat-raised-button color="accent" class="btn-iniciar" (click)="executeProcessing()">Iniciar</button>
@@ -98,7 +98,7 @@
         <button mat-raised-button color="primary" class="button">
           <mat-icon>download</mat-icon> Exportar
         </button>
-        <button mat-raised-button color="warn" class="btn-parar">Zerar resultados</button>
+        <button mat-raised-button color="warn" class="btn-parar" (click)="zerarResultados()">Zerar resultados</button>
       </div>
   
       <div class="log">
