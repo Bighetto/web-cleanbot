@@ -14,6 +14,7 @@ import { WebSocketService } from '../../services/web-socket-service.service';
 import { BancoRegistroComponent } from '../../components/banco-registro/banco-registro.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { BancoService } from '../../services/banco.service';
 
 @Component({
   selector: 'app-banco-detalhes',
@@ -55,6 +56,11 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   private websocketSubscription: Subscription | null = null;
 
+  bancos: BankUserResponse[] = [];
+
+  userBancos : BankUserResponse[] = [];
+
+
   constructor(
     private route: ActivatedRoute, 
     private router: Router, 
@@ -62,7 +68,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private webSocketService: WebSocketService, 
     private dialog: MatDialog, 
-
+    private bancoService : BancoService
 
   ) {
     this.route.paramMap.subscribe(params => {
@@ -79,7 +85,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     }
 
     const nav = this.router.getCurrentNavigation();
-    this.usuarios = nav?.extras.state?.['userBancos'] || []; 
+    this.usuarios = this.userBancos
   }
 
   ngOnInit(): void {
@@ -101,6 +107,24 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
           this.naoAutorizado = 0;
           this.semSaldo = 0;
           this.erros = 0;
+        }
+      });
+
+      this.bancoService.findBankUser(this.email).subscribe({
+        next: (res) => {
+          const nomesUnicos = new Set();
+          this.bancos = res.filter(banco => {
+            this.userBancos.push(banco)
+            if (!nomesUnicos.has(banco.bankName)) {
+              nomesUnicos.add(banco.bankName);
+              return true;
+            }
+            return false;
+          });
+          console.log('Bancos únicos do usuário:', this.bancos);
+        },
+        error: (err) => {
+          console.error('Erro ao carregar bancos:', err);
         }
       });
   
@@ -230,6 +254,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         next: (res) => {
           console.log(res)
           this.csvId = res.csvId
+          window.location.reload();
         },
         error: (err) => {
           console.error('Falha no upload', err);
@@ -239,13 +264,17 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   abrirRegistroBanco() {
-    this.dialog.open(BancoRegistroComponent, {
+    const dialogRef = this.dialog.open(BancoRegistroComponent, {
       width: '50vw',
       height: '85vh',
       maxWidth: '450px',
       disableClose: false,
       panelClass: 'custom-dialog-container',
       data: { mostrarSelecaoBanco: this.mostrarSelecaoBanco }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      window.location.reload();
     });
   }
   

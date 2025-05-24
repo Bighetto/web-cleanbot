@@ -80,7 +80,6 @@ export class BancosComponent implements OnInit {
 
   redirecionarParaBanco(nomeBanco: string) {
     this.router.navigate(['/home/detalhes-banco/', nomeBanco], {
-      state: { userBancos: this.userBancos }
     });
   }
   

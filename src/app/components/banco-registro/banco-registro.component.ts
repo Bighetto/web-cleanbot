@@ -40,6 +40,8 @@ export class BancoRegistroComponent {
 
   isLoading: boolean = false;
   mensagemSucesso: string | null = null;
+  mensagemErro: string | null = null;
+  
 
 
   mostrarSelecaoBanco: boolean = true;
@@ -52,13 +54,13 @@ export class BancoRegistroComponent {
 
     if (data?.mostrarSelecaoBanco === false) {
       this.mostrarSelecaoBanco = false;
-      this.bancoSelecionado = 'V8';
+      this.bancoSelecionado = 'V8 Digital';
     }
 
   }
 
   atualizarImagem() {
-    if (this.bancoSelecionado === 'V8') {
+    if (this.bancoSelecionado === 'V8 Digital') {
       this.imagemBanco = '/img/v8Logo.png';
     } else {
       this.imagemBanco = null;
@@ -85,6 +87,7 @@ export class BancoRegistroComponent {
   
     this.isLoading = true;
     this.mensagemSucesso = null;
+    this.mensagemErro = null;
   
     const payload: UploadBankUserRestModel = {
       bankName: this.bancoSelecionado,
@@ -100,6 +103,7 @@ export class BancoRegistroComponent {
       next: () => {
         this.isLoading = false;
         this.mensagemSucesso = 'Usuário cadastrado com sucesso!';
+        this.mensagemErro = ''; 
         setTimeout(() => {
           this.fechar();
         }, 1500);
@@ -107,8 +111,11 @@ export class BancoRegistroComponent {
       error: (err) => {
         this.isLoading = false;
         console.error('Erro ao salvar banco:', err);
+        this.mensagemErro = 'Erro ao salvar banco. Tente novamente.';
+        this.mensagemSucesso = '';
       }
     });
   }
+    
   
 }
