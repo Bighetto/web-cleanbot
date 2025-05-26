@@ -66,6 +66,13 @@ export class CsvService {
     return this.http.delete<string>(`${this.apiUrl}/zerar-resultados/${email}`);
   }
   
+  exportarResultado(email: string): Observable<Blob> {
+    return this.http.post(
+      `${this.apiUrl}/export/${email}`,
+      null,
+      { responseType: 'blob' }
+    );
+  }  
   
   
 }

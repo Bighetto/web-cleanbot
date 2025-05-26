@@ -290,6 +290,23 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     });
     window.location.reload();
   }
+
+  exportarResultado() {
+
+    this.service.exportarResultado(this.email).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resultado.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error('Erro ao exportar o arquivo', err);
+      }
+    });
+  }
   
   
 }
