@@ -124,7 +124,6 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
           console.log('Bancos únicos do usuário:', this.bancos);
         },
         error: (err) => {
-          console.error('Erro ao carregar bancos:', err);
         }
       });
   
@@ -282,7 +281,6 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   zerarResultados() {
     this.service.zerarResultados(this.email).subscribe({
       next: () => {
-        // window.location.reload();
       },
       error: (err) => {
         console.error('Erro ao zerar resultados:', err);

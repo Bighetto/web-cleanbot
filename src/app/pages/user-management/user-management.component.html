@@ -1,0 +1,49 @@
+<div class="container">
+    <mat-card class="card">
+      <div class="card-content">
+        
+        <!-- Lado Esquerdo -->
+        <div class="lado-esquerdo">
+          <h6>Informações do Usuário</h6>
+          <p><strong>Nome:</strong> {{nome}}</p>
+          <p><strong>Email:</strong> {{email}}</p>
+          <p><strong>Plano:</strong> {{plano}}</p>
+  
+          <button mat-raised-button color="primary" class="button" (click)="trocarSenha()">
+            Trocar Senha
+          </button>
+        </div>
+  
+        <!-- Lado Direito -->
+        <div class="lado-direito">
+            <h6>Usuários de Banco</h6>
+
+            <mat-form-field appearance="fill" class="select-banco">
+              <mat-label>Selecione um Banco</mat-label>
+              <mat-select [(value)]="bancoSelecionado" (selectionChange)="carregarUsuarios()">
+                <mat-option *ngFor="let banco of bancos" [value]="banco">
+                  {{ banco }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+    
+            <div *ngIf="usuariosBanco.length > 0; else semUsuarios">
+                <mat-list>
+                    <mat-list-item *ngFor="let usuario of usuariosBanco">
+                        <div class="usuario-content">
+                          <span class="nome-usuario">{{ usuario.nickname }}</span>
+                          <button mat-icon-button color="warn" (click)="deletarUsuario(usuario.id)">
+                            <mat-icon>delete_outline</mat-icon>
+                          </button>
+                        </div>
+                      </mat-list-item>
+                </mat-list>
+              </div>
+              <ng-template #semUsuarios>
+                <p>Selecione um banco para visualizar os usuários.</p>
+              </ng-template>
+          </div>  
+      </div>
+    </mat-card>
+  </div>
+  

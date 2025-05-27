@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { BankUserResponse } from '../models/bank.user.response.model';
 import { UploadBankUserRestModel } from '../models/upload.bank.user.restmodel';
 
@@ -23,15 +23,6 @@ export class BancoService {
         throw error; 
       })
     );
-
-    // const responseMock: BankUserResponse = {
-    //   id: '123456',
-    //   bankName: 'V8 Digital',
-    //   username: 'Teste',
-    //   nickname: 'Testee',
-    // };
-
-    // return of([responseMock, responseMock])
   }
 
   salvarBanco(dados: UploadBankUserRestModel): Observable<any> {
@@ -41,6 +32,16 @@ export class BancoService {
         throw error;
       })
     );;
+  }
+
+  deleteBankUser(bankUserId: string): Observable<void> {
+    const url = `${this.apiUrl}/${bankUserId}`;
+    return this.http.delete<void>(url).pipe(
+      catchError(error => {
+        console.error('Erro ao deletar usuário do banco', error);
+        return throwError(() => error);
+      })
+    );
   }
   
 }

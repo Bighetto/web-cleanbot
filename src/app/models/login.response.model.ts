@@ -3,4 +3,5 @@ export interface LoginResponse {
   email: string;
   nome: string;
   role: string;
+  planName: string;
 }

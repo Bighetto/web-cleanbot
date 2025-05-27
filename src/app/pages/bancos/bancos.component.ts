@@ -72,7 +72,6 @@ export class BancosComponent implements OnInit {
           console.log('Bancos únicos do usuário:', this.bancos);
         },
         error: (err) => {
-          console.error('Erro ao carregar bancos:', err);
         }
       });
     }

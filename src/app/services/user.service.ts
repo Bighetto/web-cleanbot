@@ -50,8 +50,19 @@ export class UserService {
       catchError((error) => throwError(() => error))
     );
   }
-  
-  
+
+  trocarSenha(email: string, newPassword: string): Observable<HttpResponse<string>> {
+    return this.http.post(
+      this.apiUrl.concat('update/password'),
+      { email, password: newPassword },
+      {
+        observe: 'response',
+        responseType: 'text'
+      }
+    ).pipe(
+      catchError((error) => throwError(() => error))
+    );
+  }
   
   
 }

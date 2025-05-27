@@ -40,7 +40,8 @@ export class LoginComponent {
         
         localStorage.setItem('authToken', response.token);
         localStorage.setItem('nome', response.nome);
-        localStorage.setItem('email', response.email)
+        localStorage.setItem('email', response.email);
+        localStorage.setItem('planName', response.planName);
         
         this.router.navigate(['/home']);
       },

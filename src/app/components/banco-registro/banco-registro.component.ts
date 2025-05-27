@@ -110,7 +110,6 @@ export class BancoRegistroComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        console.error('Erro ao salvar banco:', err);
         this.mensagemErro = 'Erro ao salvar banco. Tente novamente.';
         this.mensagemSucesso = '';
       }

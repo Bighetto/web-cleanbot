@@ -5,6 +5,7 @@ import { BancosComponent } from './pages/bancos/bancos.component';
 import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 import { RecuperarSenhaFormComponent } from './pages/recuperar-senha-form/recuperar-senha-form.component';
 import { BancoDetalhesComponent } from './pages/banco-detalhes/banco-detalhes.component';
+import { UserManagementComponent } from './pages/user-management/user-management.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },  
@@ -15,8 +16,7 @@ export const routes: Routes = [
   children: [
     { path: 'bancos', component: BancosComponent},
     { path: 'detalhes-banco/:nomeBanco', component: BancoDetalhesComponent },
-    { path: 'resultados', component: BancosComponent },
-    { path: 'planos', component: BancosComponent },
+    { path: 'usuarios', component: UserManagementComponent },
     { path: '', redirectTo: 'bancos', pathMatch: 'full' }
   ] }, 
   { path: '**', redirectTo: 'login' } 

@@ -20,8 +20,7 @@ import { CommonModule } from '@angular/common';
 export class SidebarComponent {
   menuItems = [
     { title: 'Bancos', icon: 'account_balance', route: 'bancos' },
-    { title: 'Resultados', icon: 'dashboard', route: 'resultados' },
-    { title: 'Meu Plano', icon: 'payment', route: 'planos' }
+    { title: 'Usuarios', icon: 'people', route: 'usuarios' }
   ];
 
   constructor(private router: Router) {}
