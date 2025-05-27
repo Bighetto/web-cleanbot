@@ -42,8 +42,11 @@ import { CommonModule } from '@angular/common';
       </mat-dialog-content>
 
       <mat-dialog-actions align="end">
-        <button mat-button type="button" (click)="onCancel()">Cancelar</button>
-        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Alterar</button>
+        <button mat-button type="button" (click)="onCancel()"
+        [ngStyle]="{'background-color': '#1B263B', 'color': '#FFFFFF'}" >Cancelar</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid" 
+        color="warn" 
+        >Alterar</button>
       </mat-dialog-actions>
     </form>
   `

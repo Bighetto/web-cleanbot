@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog-componen
 import { BancoService } from '../../services/banco.service';
 import { ChangePasswordDialogComponent } from '../../components/change-password-dialog-component';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-management',
@@ -43,7 +44,8 @@ export class UserManagementComponent {
   constructor(private dialog: MatDialog, 
     @Inject(PLATFORM_ID) private platformId: Object,
     private bancoService: BancoService,
-    private userService : UserService) {
+    private userService : UserService,
+    private router: Router) {
 
       if (isPlatformBrowser(this.platformId)) {
         this.nome = localStorage.getItem('nome') || 'Usuário';
@@ -118,6 +120,8 @@ export class UserManagementComponent {
           next: (res) => {
             if (res.status === 200) {
               alert('Senha alterada com sucesso!');
+              localStorage.clear();
+              this.router.navigate(['/login']);
             }
           },
           error: (error) => {
