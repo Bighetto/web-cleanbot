@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client, Message } from '@stomp/stompjs';
 import { Subject } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,15 @@ import { Subject } from 'rxjs';
 export class WebSocketService {
   private stompClient: Client | undefined;
   private messageSubject: Subject<string> = new Subject<string>();
+  private wsUrl: string = `${environment.wsUrl}`;
+
 
   constructor() {}
 
+
+
   connect(email: string) {
-    const brokerURL = `ws://localhost:8080/ws-logs?email=${encodeURIComponent(email)}`;
+    const brokerURL = `ws://${this.wsUrl}/ws-logs?email=${encodeURIComponent(email)}`;
 
     this.stompClient = new Client({
       brokerURL,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { LoginResponse } from '../models/login.response.model';
+import { environment } from '../../environments/environment.prod';
 // import { environment } from 'src/environments/environment'; 
 
 @Injectable({
@@ -9,9 +10,9 @@ import { LoginResponse } from '../models/login.response.model';
 })
 export class UserService {
 
-  // private apiUrl: string = `${environment.apiUrl}/authenticate`;
+  private apiUrl: string = `${environment.apiUrl}/user/`;
 
-  private apiUrl: string = `http://localhost:8080/user/`;
+  // private apiUrl: string = `http://localhost:8080/user/`;
 
 
   constructor(private http: HttpClient) {}

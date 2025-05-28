@@ -3,15 +3,16 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
 import { BankUserResponse } from '../models/bank.user.response.model';
 import { UploadBankUserRestModel } from '../models/upload.bank.user.restmodel';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BancoService {
 
-  // private apiUrl: string = `${environment.apiUrl}/authenticate`;
+  private apiUrl: string = `${environment.apiUrl}/bank`;
 
-  private apiUrl: string = `http://localhost:8080/bank`;
+  // private apiUrl: string = `http://localhost:8080/bank`;
 
   constructor(private http: HttpClient) {}
 

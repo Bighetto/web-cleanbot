@@ -2,15 +2,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map } from 'rxjs';
 import { FindCsvStatusRestModel } from '../models/find.csv.status.rest.model';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CsvService {
 
-  // private apiUrl: string = `${environment.apiUrl}/authenticate`;
+  private apiUrl: string = `${environment.apiUrl}/queries`;
 
-  private apiUrl: string = 'http://localhost:8080/queries';
+  // private apiUrl: string = 'http://localhost:8080/queries';
 
   constructor(private http: HttpClient) {}
 
