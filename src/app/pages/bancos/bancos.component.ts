@@ -84,12 +84,16 @@ export class BancosComponent implements OnInit {
   
 
   abrirRegistroBanco() {
-    this.dialog.open(BancoRegistroComponent, {
+    const dialogRef = this.dialog.open(BancoRegistroComponent, {
       width: '80vw',
       height: '85vh', 
       maxWidth: '900px',
       disableClose: false,
       panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      window.location.reload();
     });
   }  
 
