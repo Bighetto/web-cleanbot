@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
 import { BankUserResponse } from '../models/bank.user.response.model';
 import { UploadBankUserRestModel } from '../models/upload.bank.user.restmodel';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment'; 
 
 @Injectable({
   providedIn: 'root'

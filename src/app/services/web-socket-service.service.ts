@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client, Message } from '@stomp/stompjs';
 import { Subject } from 'rxjs';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment'; 
 
 @Injectable({
   providedIn: 'root'
