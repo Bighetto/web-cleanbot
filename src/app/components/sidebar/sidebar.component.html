@@ -1,20 +1,28 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav mode="side" opened class="sidenav">
-    <div class="logo-container">
-      <img src="/img/logo.png" alt="Logo" class="logo" />
+<!-- sidebar.component.html -->
+<div class="logo-container">
+  <img src="/img/logo.png" alt="Logo" class="logo" />
+</div>
+
+<div class="menu-wrapper">
+  <div
+    class="menu-item"
+    *ngFor="let item of menuItems"
+    (click)="navigate(item.route)"
+  >
+    <div class="menu-content">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <span class="menu-title">{{ item.title }}</span>
     </div>
+    <mat-icon class="arrow-icon">chevron_right</mat-icon>
+  </div>
+</div>
 
-    <mat-nav-list class="menu-wrapper">
-      <mat-list-item *ngFor="let item of menuItems" (click)="navigate(item.route)">
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span>{{ item.title }}</span>
-      </mat-list-item>
-    </mat-nav-list>
+<div class="support-button" (click)="openWhatsApp()">
+  <mat-icon>support_agent</mat-icon>
+  <span>Suporte</span>
+</div>
 
-    <div class="logout-button" (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      <span>Sair</span>
-    </div>
-  </mat-sidenav>
-
-</mat-sidenav-container>
+<div class="logout-button" (click)="logout()">
+  <mat-icon>logout</mat-icon>
+  <span>Sair</span>
+</div>

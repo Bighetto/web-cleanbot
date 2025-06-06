@@ -1,20 +1,26 @@
-import { Component, Inject, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, RouterModule, Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { CsvService } from '../../services/csv.service';
-import { BankUserResponse } from '../../models/bank.user.response.model';
-import { Subscription } from 'rxjs';
-import { WebSocketService } from '../../services/web-socket-service.service';
-import { BancoRegistroComponent } from '../../components/banco-registro/banco-registro.component';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { BancoRegistroComponent } from '../../components/banco-registro/banco-registro.component';
+import { BankUserResponse } from '../../models/bank.user.response.model';
 import { BancoService } from '../../services/banco.service';
+import { CsvService } from '../../services/csv.service';
+import { WebSocketService } from '../../services/web-socket-service.service';
 
 @Component({
   selector: 'app-banco-detalhes',
@@ -28,17 +34,17 @@ import { BancoService } from '../../services/banco.service';
     MatCheckboxModule,
     MatFormFieldModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './banco-detalhes.component.html',
-  styleUrls: ['./banco-detalhes.component.scss']
+  styleUrls: ['./banco-detalhes.component.scss'],
 })
 export class BancoDetalhesComponent implements OnInit, OnDestroy {
   nomeBanco: string | null = null;
   usuarios: BankUserResponse[] = [];
   nome: string | null = null;
   email: string;
-  logConsultas: string[] = [];  
+  logConsultas: string[] = [];
 
   cpfsConsultados = 0;
   saldos = 0;
@@ -52,26 +58,24 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   usuariosSelecionados: any[] = [];
   botaoTexto: string = 'Iniciar';
 
-  mostrarSelecaoBanco: boolean = false; 
+  mostrarSelecaoBanco: boolean = false;
 
   private websocketSubscription: Subscription | null = null;
 
   bancos: BankUserResponse[] = [];
 
-  userBancos : BankUserResponse[] = [];
-
+  userBancos: BankUserResponse[] = [];
 
   constructor(
-    private route: ActivatedRoute, 
-    private router: Router, 
-    private service: CsvService, 
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: CsvService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private webSocketService: WebSocketService, 
-    private dialog: MatDialog, 
-    private bancoService : BancoService
-
+    private webSocketService: WebSocketService,
+    private dialog: MatDialog,
+    private bancoService: BancoService
   ) {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       this.nomeBanco = params.get('nomeBanco');
       console.log('Banco selecionado:', this.nomeBanco);
     });
@@ -85,7 +89,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     }
 
     const nav = this.router.getCurrentNavigation();
-    this.usuarios = this.userBancos
+    this.usuarios = this.userBancos;
   }
 
   ngOnInit(): void {
@@ -107,14 +111,14 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
           this.naoAutorizado = 0;
           this.semSaldo = 0;
           this.erros = 0;
-        }
+        },
       });
 
       this.bancoService.findBankUser(this.email).subscribe({
         next: (res) => {
           const nomesUnicos = new Set();
-          this.bancos = res.filter(banco => {
-            this.userBancos.push(banco)
+          this.bancos = res.filter((banco) => {
+            this.userBancos.push(banco);
             if (!nomesUnicos.has(banco.bankName)) {
               nomesUnicos.add(banco.bankName);
               return true;
@@ -123,29 +127,29 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
           });
           console.log('Bancos únicos do usuário:', this.bancos);
         },
-        error: (err) => {
-        }
+        error: (err) => {},
       });
-  
+
       this.webSocketService.connect(this.email);
-  
-      this.websocketSubscription = this.webSocketService.messages$.subscribe((message: string) => {
-        this.logConsultas.push(message);
-        this.processarMensagemWebSocket(message);
-        console.log('Mensagem recebida:', message);
-        if (this.logConsultas.length > 20) {
-          this.logConsultas.shift();
+
+      this.websocketSubscription = this.webSocketService.messages$.subscribe(
+        (message: string) => {
+          this.logConsultas.push(message);
+          this.processarMensagemWebSocket(message);
+          console.log('Mensagem recebida:', message);
+          if (this.logConsultas.length > 20) {
+            this.logConsultas.shift();
+          }
         }
-      });
+      );
     }
   }
-  
 
   ngOnDestroy(): void {
     if (this.websocketSubscription) {
       this.websocketSubscription.unsubscribe();
     }
-    this.webSocketService.close();  // Fechar a conexão WebSocket ao destruir o componente
+    this.webSocketService.close(); // Fechar a conexão WebSocket ao destruir o componente
   }
 
   // Função para enviar uma mensagem via WebSocket
@@ -154,33 +158,32 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
       const message = { email: this.email, text: 'Mensagem do WebSocket' };
       this.webSocketService.sendMessage(message);
       console.log('Mensagem enviada:', message);
-      
+
       // Adiciona a mensagem ao log de consultas
       this.logConsultas.push(`Mensagem enviada: ${JSON.stringify(message)}`);
     }
   }
 
   processarMensagemWebSocket(mensagem: string): void {
-  
     const resultadoRegex = /RESULTADO:\s*(.*)$/i;
     const match = mensagem.match(resultadoRegex);
-  
+
     if (!match || !match[1]) {
       return;
     }
-  
+
     const resultadoRaw = match[1].trim();
-  
+
     const valorNumerico = parseFloat(resultadoRaw.replace(',', '.'));
-  
+
     if (!isNaN(valorNumerico)) {
       this.cpfsConsultados++;
-      this.saldos ++;
+      this.saldos++;
       return;
     }
-  
+
     const resultado = resultadoRaw.toUpperCase();
-  
+
     switch (resultado) {
       case 'NÃO AUTORIZADO':
         this.cpfsConsultados++;
@@ -201,28 +204,27 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  
-
 
   onUsuariosSelecionadosChange() {
     this.quantidadeUsuariosExecutar = this.usuariosSelecionados.length;
   }
 
-  executeProcessing(){
-    const usuariosIds = this.usuariosSelecionados.map(usuario => usuario.id);
-    this.service.executarProcessamento(this.csvId, this.email, usuariosIds).subscribe({
-      next: (processoId) => {
-        console.log('Processo iniciado com ID:', processoId);
-        localStorage.setItem('processoIdAtivo', processoId);
-      },
-      error: (err) => {
-        console.error('Erro ao iniciar processamento.');
-      }
-    });
+  executeProcessing() {
+    const usuariosIds = this.usuariosSelecionados.map((usuario) => usuario.id);
+    this.service
+      .executarProcessamento(this.csvId, this.email, usuariosIds)
+      .subscribe({
+        next: (processoId) => {
+          console.log('Processo iniciado com ID:', processoId);
+          localStorage.setItem('processoIdAtivo', processoId);
+        },
+        error: (err) => {
+          console.error('Erro ao iniciar processamento.');
+        },
+      });
   }
 
   pararProcesso() {
-  
     this.service.pararProcessamento(this.email).subscribe({
       next: (msg) => {
         console.log(msg);
@@ -231,11 +233,9 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('Erro ao tentar parar o processo:', err);
-      }
+      },
     });
   }
-  
-
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -251,26 +251,25 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
       this.service.uploadFile(file, this.email).subscribe({
         next: (res) => {
-          console.log(res)
-          this.csvId = res.csvId
+          console.log(res);
+          this.csvId = res.csvId;
           window.location.reload();
         },
         error: (err) => {
           console.error('Falha no upload', err);
         },
       });
-
     }
   }
 
   abrirRegistroBanco() {
     const dialogRef = this.dialog.open(BancoRegistroComponent, {
-      width: '50vw',
+      width: '100%',
       height: '85vh',
       maxWidth: '450px',
       disableClose: false,
       panelClass: 'custom-dialog-container',
-      data: { mostrarSelecaoBanco: this.mostrarSelecaoBanco }
+      data: { mostrarSelecaoBanco: this.mostrarSelecaoBanco },
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -280,17 +279,15 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   zerarResultados() {
     this.service.zerarResultados(this.email).subscribe({
-      next: () => {
-      },
+      next: () => {},
       error: (err) => {
         console.error('Erro ao zerar resultados:', err);
-      }
+      },
     });
     window.location.reload();
   }
 
   exportarResultado() {
-
     this.service.exportarResultado(this.email).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
@@ -302,9 +299,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('Erro ao exportar o arquivo', err);
-      }
+      },
     });
   }
-  
-  
 }

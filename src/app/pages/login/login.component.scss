@@ -1,25 +1,25 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #EEF0FF;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #eef0ff;
+  flex-direction: column;
 }
 
 .error-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffcccc; 
+  background-color: #ffcccc;
   color: #d8000c;
-  border: 1px solid #d8000c; 
+  border: 1px solid #d8000c;
   border-radius: 8px;
   padding: 10px;
   margin: 10px auto;
-  text-align: center; 
-  font-weight: bold; 
-  width: 100%; 
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
   max-width: 400px;
 }
 
@@ -43,15 +43,14 @@ mat-card-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #1B263B;
+  color: #1b263b;
   padding: 10px;
 }
 
-.login-subtitle{
+.login-subtitle {
   padding-inline: 10px;
   padding-bottom: 15px;
 }
-
 
 .input-credentials {
   border-radius: 10px;
@@ -64,42 +63,40 @@ mat-card-title {
   margin: 0px 0;
   color: #007bff;
   text-transform: none;
-} 
+}
 
 ::ng-deep .enter-button {
   width: 100% !important;
   padding: 10px !important;
   font-size: 1rem !important;
   margin-top: 20px !important;
-  background-color: #1B263B !important;
+  background-color: #1b263b !important;
   color: white !important;
   border-radius: 20px !important;
 }
 
-
 button.mat-raised-button {
-    background-color: #1B263B; 
-    color: white;  
+  background-color: #1b263b;
+  color: white;
 }
-  
+
 button.mat-raised-button:hover {
-    background-color: #162133; 
+  background-color: #162133;
 }
 
 .logo {
-  width: 120px; 
-  height: auto; 
+  width: 120px;
+  height: auto;
   position: absolute;
   top: 30px;
-  left: 30px; 
+  left: 30px;
 }
 
 .login-container {
-  position: relative; 
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh; 
-  justify-content: center; 
+  height: 100vh;
+  justify-content: center;
 }
-  
