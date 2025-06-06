@@ -1,16 +1,63 @@
 .sidenav-container {
-    height: 100vh;
-  }
-  
-  mat-sidenav {
-    width: 250px;
-    background-color: #fff;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+}
+
+mat-sidenav-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+mat-sidenav {
+  width: 250px;
+  background-color: #fff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.conteudo-home {
+  background-color: #eef0ff;
+}
+
+.menu-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #1b263b;
+  color: white;
+  border: none;
+  font-size: 22px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 9999; // <- reforçado
+}
+
+@media (max-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
   }
 
-  .conteudo-home{
-
-    background-color: #EEF0FF;
-
+  .banco-container,
+  .credenciais-container {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
   }
-  
+
+  .form-wrapper {
+    padding: 20px 12px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: hidden !important;
+  }
+
+  .button-verify-and-save {
+    width: 100% !important;
+    min-width: unset !important;
+  }
+}

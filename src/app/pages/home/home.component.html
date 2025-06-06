@@ -1,10 +1,22 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" opened class="sidenav">
-      <app-sidebar></app-sidebar>
-    </mat-sidenav>
-  
-    <mat-sidenav-content class="conteudo-home">
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  
+  <!-- SIDENAV -->
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile ? 'over' : 'side'"
+    [opened]="!isMobile"
+    class="sidenav"
+  >
+    <app-sidebar [sidenav]="sidenav" [isMobile]="isMobile"></app-sidebar>
+  </mat-sidenav>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <mat-sidenav-content class="conteudo-home">
+    <!-- Botão hambúrguer fixo no mobile -->
+    <button class="menu-toggle" (click)="sidenav.toggle()" [hidden]="!isMobile">
+      ☰
+    </button>
+
+    <!-- ROTEAMENTO -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

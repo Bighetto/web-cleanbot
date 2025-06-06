@@ -1,118 +1,168 @@
 <div class="container">
-    <mat-card class="configuration-card">
-      <input
-        type="file"
-        accept=".csv"
-        #fileInput
-        hidden
-        (change)="onFileSelected($event)"
-      />
-      
+  <mat-card class="configuration-card">
+    <input
+      type="file"
+      accept=".csv"
+      #fileInput
+      hidden
+      (change)="onFileSelected($event)"
+    />
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="button"
+      (click)="fileInput.click()"
+    >
+      <mat-icon>upload_file</mat-icon>
+      Adicionar arquivo .CSV
+    </button>
+
+    <mat-card class="configuracoes">
+      <h4>Configurações</h4>
+      <p>
+        CPFs: <strong>{{ quantidadeCpfs }}</strong>
+      </p>
+      <p>
+        Usuários: <strong>{{ quantidadeUsuariosExecutar }}</strong>
+      </p>
+      <p>Delay (Segundos): <strong>2</strong></p>
+      <p>Tabela: <strong>Normal</strong></p>
+
+      <!-- <mat-checkbox checked>Data e hora de término</mat-checkbox> TODO: IMPLEMENTAR POSTERIORMENTE
+        <p><strong>25/04</strong> - <strong>07:30</strong></p> -->
+    </mat-card>
+
+    <button
+      mat-raised-button
+      color="accent"
+      class="btn-iniciar"
+      (click)="executeProcessing()"
+    >
+      Iniciar
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      class="btn-parar"
+      (click)="pararProcesso()"
+    >
+      Pausar
+    </button>
+  </mat-card>
+
+  <div class="conteudo">
+    <div class="usuarios">
+      <button mat-raised-button (click)="abrirRegistroBanco()" class="button">
+        <mat-icon class="icon">person_add</mat-icon> Usuário
+      </button>
+
+      <span>Selecione os usuários:</span>
+      <mat-form-field appearance="fill" style="min-width: 300px">
+        <mat-select
+          [(ngModel)]="usuariosSelecionados"
+          (selectionChange)="onUsuariosSelecionadosChange()"
+          multiple
+        >
+          <mat-option *ngFor="let usuario of usuarios" [value]="usuario">
+            {{ usuario.nickname }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="resumo">
+      <div class="card card-azul">
+        <div class="card-content">
+          <div class="icon-circle">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div>
+            <p>CPFs Consultados:</p>
+            <h3>0</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-verde">
+        <div class="card-content">
+          <div class="icon-circle">
+            <mat-icon>attach_money</mat-icon>
+          </div>
+          <div>
+            <p>Saldos:</p>
+            <h3>0</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-amarelo">
+        <div class="card-content">
+          <div class="icon-circle">
+            <mat-icon>person_off</mat-icon>
+          </div>
+          <div>
+            <p>Não Autorizado:</p>
+            <h3>0</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-vermelho">
+        <div class="card-content">
+          <div class="icon-circle">
+            <mat-icon>link_off</mat-icon>
+          </div>
+          <div>
+            <p>Sem saldo:</p>
+            <h3>0</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-vermelho">
+        <div class="card-content">
+          <div class="icon-circle">
+            <mat-icon>error</mat-icon>
+          </div>
+          <div>
+            <p>Erros:</p>
+            <h3>0</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acoes-resumo">
       <button
         mat-raised-button
         color="primary"
         class="button"
-        (click)="fileInput.click()"
+        (click)="exportarResultado()"
       >
-        <mat-icon>upload_file</mat-icon>
-        Adicionar arquivo .CSV
+        <mat-icon>download</mat-icon> Exportar
       </button>
-  
-      <mat-card class="configuracoes">
-        <h4>Configurações</h4>
-        <p>CPFs: <strong>{{quantidadeCpfs}}</strong></p>
-        <p>Usuários: <strong>{{ quantidadeUsuariosExecutar }}</strong></p>
-        <p>Delay (Segundos): <strong>2</strong></p>
-        <p>Tabela: <strong>Normal</strong></p>
-  
-        <!-- <mat-checkbox checked>Data e hora de término</mat-checkbox> TODO: IMPLEMENTAR POSTERIORMENTE
-        <p><strong>25/04</strong> - <strong>07:30</strong></p> -->
+      <button
+        mat-raised-button
+        color="warn"
+        class="btn-parar"
+        (click)="zerarResultados()"
+      >
+        Zerar resultados
+      </button>
+    </div>
+
+    <div class="log">
+      <h5>Histórico de consultas:</h5>
+      <mat-card class="log-conteudo" *ngIf="logConsultas.length > 0">
+        <div *ngFor="let log of logConsultas">
+          <p>{{ log }}</p>
+        </div>
       </mat-card>
-  
-      <button mat-raised-button color="accent" class="btn-iniciar" (click)="executeProcessing()">Iniciar</button>
-      <button mat-raised-button color="warn" class="btn-parar" (click)="pararProcesso()">Pausar</button>
-    </mat-card>
-  
-    <div class="conteudo">
-      <div class="usuarios">
-        <button mat-raised-button (click)="abrirRegistroBanco()" class="button">
-          <mat-icon class="icon">person_add</mat-icon> Usuário
-        </button>
-        
-        <span>Selecione os usuários:</span>
-        <mat-form-field appearance="fill" style="min-width: 300px;">
-          <mat-select [(ngModel)]="usuariosSelecionados" (selectionChange)="onUsuariosSelecionadosChange()" multiple>
-            <mat-option *ngFor="let usuario of usuarios" [value]="usuario">
-              {{ usuario.nickname }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-  
-      <div class="resumo">
-        <mat-card class="card">
-          <div class="card-content">
-            <mat-icon>assignment</mat-icon>
-            <p>CPFs Consultados:</p>
-          </div>
-          <h3>{{ cpfsConsultados }}</h3>
-        </mat-card>
-        
-        <mat-card class="card">
-          <div class="card-content">
-            <mat-icon>account_balance_wallet</mat-icon>
-            <p>Saldos:</p>
-          </div>
-          <h3>{{ saldos }}</h3>
-        </mat-card>
-        
-        <mat-card class="card">
-          <div class="card-content">
-            <mat-icon>block</mat-icon>
-            <p>Não Autorizado:</p>
-          </div>
-          <h3>{{ naoAutorizado }}</h3>
-        </mat-card>
-        
-        <mat-card class="card">
-          <div class="card-content">
-            <mat-icon>visibility_off</mat-icon>
-            <p>Sem saldo:</p>
-          </div>
-          <h3>{{ semSaldo }}</h3>
-        </mat-card>
-        
-        <mat-card class="card">
-          <div class="card-content">
-            <mat-icon>error</mat-icon>
-            <p>Erros:</p>
-          </div>
-          <h3>{{ erros }}</h3>
-        </mat-card>
-        
-      </div>
-      
-      
-  
-      <div class="acoes-resumo">
-        <button mat-raised-button color="primary" class="button" (click)="exportarResultado()">
-          <mat-icon>download</mat-icon> Exportar
-        </button>
-        <button mat-raised-button color="warn" class="btn-parar" (click)="zerarResultados()">Zerar resultados</button>
-      </div>
-  
-      <div class="log">
-        <h5>Histórico de consultas:</h5>
-        <mat-card class="log-conteudo" *ngIf="logConsultas.length > 0">
-          <div *ngFor="let log of logConsultas">
-            <p>{{ log }}</p>
-          </div>
-        </mat-card>
-      
-        <mat-card class="log-conteudo" *ngIf="logConsultas.length === 0">
-          <p>Nenhuma consulta ainda.</p>
-        </mat-card>
-      </div>      
+
+      <mat-card class="log-conteudo" *ngIf="logConsultas.length === 0">
+        <p>Nenhuma consulta ainda.</p>
+      </mat-card>
     </div>
   </div>
-  
+</div>
