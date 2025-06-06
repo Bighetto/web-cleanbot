@@ -4,15 +4,15 @@ $primary-text-color: #1b263b;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 15px; // Reduzido de 20px
-  padding: 15px; // Reduzido de 20px
+  gap: 15px; 
+  padding: 15px; 
 }
 
 .configuration-card {
-  width: 220px; // Reduzido de 250px
+  width: 220px;
   display: flex;
   flex-direction: column;
-  gap: 10px; // Reduzido de 12px
+  gap: 10px;
   background-color: transparent !important;
   box-shadow: none !important;
   border: none;
@@ -20,7 +20,7 @@ $primary-text-color: #1b263b;
 
   h4 {
     margin: 0;
-    font-size: 14px; // Reduzido de 15px
+    font-size: 14px;
     font-weight: 600;
     color: #333;
     color: $primary-text-color;
@@ -28,7 +28,7 @@ $primary-text-color: #1b263b;
 
   p {
     margin: 0;
-    font-size: 12px; // Reduzido de 13px
+    font-size: 12px;
     display: flex;
     justify-content: space-between;
     color: $primary-text-color;
@@ -39,7 +39,7 @@ $primary-text-color: #1b263b;
   }
 
   mat-checkbox {
-    margin-top: 8px; // Reduzido de 10px
+    margin-top: 8px; 
   }
 }
 
@@ -47,7 +47,7 @@ $primary-text-color: #1b263b;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 15px; // Reduzido de 20px
+  gap: 15px; 
   flex-wrap: wrap;
   justify-content: end;
 }
@@ -56,40 +56,40 @@ $primary-text-color: #1b263b;
   background-color: #a5d6a7 !important;
   color: #19741c !important;
   color: black;
-  border-radius: 8px; // Reduzido de 10px
-  box-shadow: 4px 4px 6px 1px rgba(27, 38, 59, 0.3); // Reduzido
-  margin-bottom: 8px; // Reduzido de 10px
-  margin-top: 6px; // Reduzido de 7px
-  padding: 8px 16px; // Adicionado para controlar tamanho
-  font-size: 14px; // Adicionado
+  border-radius: 8px;
+  box-shadow: 4px 4px 6px 1px rgba(27, 38, 59, 0.3); 
+  margin-bottom: 8px; 
+  margin-top: 6px; 
+  padding: 8px 16px; 
+  font-size: 14px; 
 }
 
 .btn-parar {
   background-color: #ef9a9a !important;
   color: rgb(255, 0, 0);
-  box-shadow: 4px 4px 6px 1px rgba(27, 38, 59, 0.3); // Reduzido
-  border-radius: 8px; // Reduzido de 10px
-  padding: 8px 16px; // Adicionado
-  font-size: 14px; // Adicionado
+  box-shadow: 4px 4px 6px 1px rgba(27, 38, 59, 0.3); 
+  border-radius: 8px; 
+  padding: 8px 16px; 
+  font-size: 14px; 
 }
 
 .configuracoes {
   background-color: #f3f6fd;
-  padding: 12px 16px; // Reduzido de 16px 20px
-  border-radius: 10px; // Reduzido de 12px
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); // Reduzido
+  padding: 12px 16px;
+  border-radius: 10px; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); 
   display: flex;
   flex-direction: column;
-  gap: 8px; // Reduzido de 10px
-  font-size: 13px; // Reduzido de 14px
+  gap: 8px; 
+  font-size: 13px;
   color: #333;
-  box-shadow: 4px 4px 12px 1px rgba(27, 38, 59, 0.3); // Reduzido
+  box-shadow: 4px 4px 12px 1px rgba(27, 38, 59, 0.3);
   border: 1px solid #ccc;
   color: $primary-text-color;
 
   h4 {
-    margin: 0 0 8px 0; // Reduzido de 10px
-    font-size: 15px; // Reduzido de 16px
+    margin: 0 0 8px 0; 
+    font-size: 15px;
     font-weight: 600;
     color: $primary-text-color;
     border-bottom: 0.1px solid #1b263b3d;
@@ -99,7 +99,7 @@ $primary-text-color: #1b263b;
     margin: 0;
     display: flex;
     justify-content: space-between;
-    font-size: 12px; // Reduzido de 13px
+    font-size: 12px;
     color: $primary-text-color;
 
     strong {
@@ -109,7 +109,7 @@ $primary-text-color: #1b263b;
   }
 
   mat-checkbox {
-    margin-top: 8px; // Reduzido de 10px
+    margin-top: 8px; 
   }
 }
 
@@ -117,19 +117,19 @@ $primary-text-color: #1b263b;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px; // Reduzido de 10px
+  gap: 8px; 
 }
 
 .button {
   display: flex;
   align-items: center;
-  gap: 12px; // Reduzido de 15px
+  gap: 12px; 
   background-color: #1b263b !important;
   color: #f3f6fd !important;
-  border-radius: 8px; // Reduzido de 10px
-  box-shadow: 4px 4px 6px 1px rgba(27, 38, 59, 0.3); // Reduzido
-  padding: 10px 16px; // Adicionado para controle
-  font-size: 14px; // Adicionado
+  border-radius: 8px;
+  box-shadow: 4px 4px 6px 1px rgba(27, 38, 59, 0.3); 
+  padding: 10px 16px;   
+  font-size: 14px; 
 }
 
 .icon {
@@ -138,24 +138,24 @@ $primary-text-color: #1b263b;
 
 .resumo {
   display: flex;
-  gap: 15px; // Reduzido de 20px
-  padding: 10px 16px; // Reduzido de 12px 20px
+  gap: 15px; 
+  padding: 10px 16px; 
   background-color: #f3f6fd;
-  border-radius: 10px; // Reduzido de 12px
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Reduzido
+  border-radius: 10px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   justify-content: space-between;
-  box-shadow: 4px 4px 15px 1px rgba(27, 38, 59, 0.3); // Reduzido
+  box-shadow: 4px 4px 15px 1px rgba(27, 38, 59, 0.3); 
 }
 
 .card {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 140px; // Reduzido de 160px
+  min-width: 140px; 
   flex: 1;
   background-color: transparent;
   border: none;
-  padding: 6px 0; // Reduzido de 8px
+  padding: 6px 0; 
   border-right: 1px solid #ccc;
 
   &:last-child {
@@ -166,24 +166,24 @@ $primary-text-color: #1b263b;
 .card-content {
   display: flex;
   align-items: center;
-  gap: 10px; // Reduzido de 12px
+  gap: 10px; 
 
   p {
-    font-size: 12px; // Reduzido de 13px
+    font-size: 12px;
     font-weight: 500;
     margin: 0;
   }
 
   h3 {
-    font-size: 18px; // Reduzido de 20px
+    font-size: 18px;
     margin: 2px 0 0;
     font-weight: 600;
   }
 }
 
 .icon-circle {
-  width: 40px; // Reduzido de 45px
-  height: 40px; // Reduzido de 45px
+  width: 40px;
+  height: 40px; 
   border-radius: 25%;
   display: flex;
   align-items: center;
@@ -191,11 +191,10 @@ $primary-text-color: #1b263b;
 
   mat-icon {
     color: white;
-    font-size: 20px; // Adicionado para controlar tamanho do ícone
+    font-size: 20px; 
   }
 }
 
-/* Cores */
 .card-azul .icon-circle {
   background-color: #7389c0;
 }
@@ -213,23 +212,23 @@ $primary-text-color: #1b263b;
 }
 
 .card-content div p {
-  font-size: 15px; // Reduzido de 17px
+  font-size: 15px; 
   color: #1b263b;
 }
 
 .card-content div h3 {
-  font-size: 26px; // Reduzido de 30px
+  font-size: 26px;
 }
 
 .card-content div p,
 .card-content div h3 {
-  margin-left: 16px; // Reduzido de 20px
+  margin-left: 16px; 
 }
 
 .card-azul h3,
 .card-azul p {
   color: #1b263b;
-  margin-left: 12px; // Reduzido de 14px
+  margin-left: 12px; 
 }
 
 .card-verde h3 {
@@ -246,33 +245,31 @@ $primary-text-color: #1b263b;
 
 .acoes-resumo {
   display: flex;
-  gap: 12px; // Reduzido de 15px
+  gap: 12px; 
   margin-left: auto;
 }
 
 .log {
   display: flex;
   flex-direction: column;
-  margin: 15px; // Reduzido de 20px
-  gap: 8px; // Reduzido de 10px
+  margin: 15px; 
+  gap: 8px; 
   color: $primary-text-color;
 }
 
 .log-conteudo {
-  height: 350px; // Reduzido de 400px
+  height: 350px;
   overflow-y: auto;
   background-color: #f3f6fd;
-  padding: 16px; // Reduzido de 20px
+  padding: 16px; 
   width: 100%;
   white-space: pre-wrap;
   color: $primary-text-color;
-  box-shadow: 4px 4px 25px 1px rgba(27, 38, 59, 0.3); // Reduzido
-  font-size: 13px; // Adicionado para controlar tamanho da fonte
+  box-shadow: 4px 4px 25px 1px rgba(27, 38, 59, 0.3); 
+  font-size: 13px; 
 }
 
-// Media queries aprimoradas
 @media (max-width: 1366px) {
-  // Para laptops menores (como 13 polegadas)
   .container {
     gap: 12px;
     padding: 12px;
@@ -320,7 +317,6 @@ $primary-text-color: #1b263b;
 }
 
 @media (max-width: 1024px) {
-  // Para tablets e telas menores
   .resumo {
     flex-wrap: wrap;
 
