@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BancoRegistroComponent } from '../../components/banco-registro/banco-registro.component';
@@ -35,6 +36,7 @@ import { WebSocketService } from '../../services/web-socket-service.service';
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
+    MatSnackBarModule,
   ],
   templateUrl: './banco-detalhes.component.html',
   styleUrls: ['./banco-detalhes.component.scss'],
@@ -73,7 +75,8 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private webSocketService: WebSocketService,
     private dialog: MatDialog,
-    private bancoService: BancoService
+    private bancoService: BancoService,
+    private snackBar: MatSnackBar
   ) {
     this.route.paramMap.subscribe((params) => {
       this.nomeBanco = params.get('nomeBanco');
@@ -245,17 +248,48 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
       if (!this.email) {
         console.error('Email ausente!');
+        this.snackBar.open('Erro: Email não encontrado.', 'Fechar', {
+          duration: 3000,
+        });
         return;
       }
+
+      this.snackBar.open(
+        'Upload iniciado. Aguarde enquanto o arquivo é processado...',
+        '',
+        {
+          panelClass: ['snackbar-info'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        }
+      );
 
       this.service.uploadFile(file, this.email).subscribe({
         next: (res) => {
           console.log(res);
           this.csvId = res.csvId;
-          window.location.reload();
+          this.snackBar.open('Upload concluído com sucesso!', 'Fechar', {
+            duration: 3000,
+            panelClass: ['snackbar-sucesso'],
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         },
         error: (err) => {
           console.error('Falha no upload', err);
+          this.snackBar.open(
+            'Erro ao fazer upload. Tente novamente.',
+            'Fechar',
+            {
+              duration: 4000,
+              panelClass: ['snackbar-erro'],
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            }
+          );
         },
       });
     }
@@ -283,7 +317,9 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         console.error('Erro ao zerar resultados:', err);
       },
     });
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   }
 
   exportarResultado() {
