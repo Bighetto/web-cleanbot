@@ -1,4 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// No styles.scss global
+.mat-snack-bar-container.snackbar-sucesso {
+  background-color: #4caf50 !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.mat-snack-bar-container.snackbar-info {
+  background-color: #a59e44 !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.mat-snack-bar-container.snackbar-erro {
+  background-color: #f44336 !important;
+  color: white !important;
+  font-weight: bold;
+}
