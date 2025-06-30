@@ -77,7 +77,6 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   ) {
     this.route.paramMap.subscribe((params) => {
       this.nomeBanco = params.get('nomeBanco');
-      console.log('Banco selecionado:', this.nomeBanco);
     });
 
     if (isPlatformBrowser(this.platformId)) {
