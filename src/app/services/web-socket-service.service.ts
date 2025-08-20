@@ -16,29 +16,30 @@ export class WebSocketService {
 
 
 
-  connect(email: string) {
-    const brokerURL = `ws://${this.wsUrl}/ws-logs?email=${encodeURIComponent(email)}`;
-
+  connect(email: string, bankName: string) {
+    const brokerURL = `ws://${this.wsUrl}/ws-logs?email=${encodeURIComponent(email)}&bankName=${encodeURIComponent(bankName)}`;
+  
     this.stompClient = new Client({
       brokerURL,
       reconnectDelay: 5000,
       debug: (str) => console.log(str),
     });
-
+  
     this.stompClient.onConnect = (frame) => {
       console.log('Conectado ao WebSocket:', frame);
-
-      this.stompClient?.subscribe('/user/queue/logs', (message: Message) => {
+  
+      this.stompClient?.subscribe(`/user/queue/logs-${bankName}`, (message: Message) => {
         this.messageSubject.next(message.body);
       });
     };
-
+  
     this.stompClient.onStompError = (frame) => {
       console.error('Erro no STOMP:', frame);
     };
-
+  
     this.stompClient.activate();
   }
+  
 
   disconnect() {
     if (this.stompClient && this.stompClient.connected) {

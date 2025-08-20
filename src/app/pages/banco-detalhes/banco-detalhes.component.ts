@@ -96,7 +96,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.email) {
-      this.service.buscarStatusPorEmail(this.email).subscribe({
+      this.service.buscarStatusPorEmail(this.email, this.nomeBanco!!).subscribe({
         next: (status) => {
           this.quantidadeCpfs = status.quantidadeDocumentos;
           this.csvId = status.idCsv;
@@ -132,7 +132,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         error: (err) => {},
       });
 
-      this.webSocketService.connect(this.email);
+      this.webSocketService.connect(this.email, this.nomeBanco!!);
 
       this.websocketSubscription = this.webSocketService.messages$.subscribe(
         (message: string) => {
@@ -214,7 +214,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   executeProcessing() {
     const usuariosIds = this.usuariosSelecionados.map((usuario) => usuario.id);
     this.service
-      .executarProcessamento(this.csvId, this.email, usuariosIds)
+      .executarProcessamento(this.csvId, this.email, usuariosIds, this.nomeBanco!!)
       .subscribe({
         next: (processoId) => {
           console.log('Processo iniciado com ID:', processoId);
@@ -227,7 +227,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   pararProcesso() {
-    this.service.pararProcessamento(this.email).subscribe({
+    this.service.pararProcessamento(this.email, this.nomeBanco!!).subscribe({
       next: (msg) => {
         console.log(msg);
         alert(msg);
@@ -264,7 +264,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         }
       );
 
-      this.service.uploadFile(file, this.email).subscribe({
+      this.service.uploadFile(file, this.email, this.nomeBanco!!).subscribe({
         next: (res) => {
           console.log(res);
           this.csvId = res.csvId;

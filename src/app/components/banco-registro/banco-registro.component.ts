@@ -62,7 +62,10 @@ export class BancoRegistroComponent {
   atualizarImagem() {
     if (this.bancoSelecionado === 'V8 Digital') {
       this.imagemBanco = '/img/v8Logo.png';
-    } else {
+    } else if(this.bancoSelecionado === 'Hub Credito'){
+      this.imagemBanco = '/img/hubLogo.png'
+    }
+    else {
       this.imagemBanco = null;
     }
   }
