@@ -120,14 +120,15 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         next: (res) => {
           const nomesUnicos = new Set();
           this.bancos = res.filter((banco) => {
-            this.userBancos.push(banco);
+            if (banco.bankName === this.nomeBanco) {
+              this.userBancos.push(banco); 
+            }
             if (!nomesUnicos.has(banco.bankName)) {
               nomesUnicos.add(banco.bankName);
               return true;
             }
             return false;
           });
-          console.log('Bancos únicos do usuário:', this.bancos);
         },
         error: (err) => {},
       });
