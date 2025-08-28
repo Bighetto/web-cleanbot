@@ -64,13 +64,13 @@ export class CsvService {
       );
   }
 
-  zerarResultados(email: string): Observable<string> {
-    return this.http.delete<string>(`${this.apiUrl}/zerar-resultados/${email}`);
+  zerarResultados(email: string, bankName: string): Observable<string> {
+    return this.http.delete<string>(`${this.apiUrl}/zerar-resultados/${email}/${bankName}`);
   }
   
-  exportarResultado(email: string): Observable<Blob> {
+  exportarResultado(email: string, bankName: string): Observable<Blob> {
     return this.http.post(
-      `${this.apiUrl}/export/${email}`,
+      `${this.apiUrl}/export/${email}/${bankName}`,
       null,
       { responseType: 'blob' }
     );

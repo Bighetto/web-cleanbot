@@ -152,7 +152,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
     if (this.websocketSubscription) {
       this.websocketSubscription.unsubscribe();
     }
-    this.webSocketService.close(); // Fechar a conexão WebSocket ao destruir o componente
+    this.webSocketService.close();
   }
 
   // Função para enviar uma mensagem via WebSocket
@@ -162,7 +162,6 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
       this.webSocketService.sendMessage(message);
       console.log('Mensagem enviada:', message);
 
-      // Adiciona a mensagem ao log de consultas
       this.logConsultas.push(`Mensagem enviada: ${JSON.stringify(message)}`);
     }
   }
@@ -312,7 +311,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   zerarResultados() {
-    this.service.zerarResultados(this.email).subscribe({
+    this.service.zerarResultados(this.email, this.nomeBanco!!).subscribe({
       next: () => {},
       error: (err) => {
         console.error('Erro ao zerar resultados:', err);
@@ -324,7 +323,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   exportarResultado() {
-    this.service.exportarResultado(this.email).subscribe({
+    this.service.exportarResultado(this.email, this.nomeBanco!!).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
