@@ -40,8 +40,8 @@ export class CsvService {
     return this.http.get<FindCsvStatusRestModel>(url);
   }
 
-  executarProcessamento(csvId: string, email: string, usuarios: string[], bankName: string): Observable<string> {
-    const body = { csvId, email, usuarios, bankName };
+  executarProcessamento(csvId: string, email: string, usuarios: string[], bankName: string, nomeTabelaFiltro: string, bancarizador: string): Observable<string> {
+    const body = { csvId, email, usuarios, bankName, nomeTabelaFiltro, bancarizador };
     
     return this.http.post<{ processoId: string }>(
       `${this.apiUrl}/executar`,

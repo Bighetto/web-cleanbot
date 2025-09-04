@@ -68,6 +68,12 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   userBancos: BankUserResponse[] = [];
 
+  nomeTabelaSelecionada: string | null = null;
+  tabelasDisponiveis: string[] = [];
+
+  nomeBancarizadorSelecionado: string | null = null;
+  bancarizadoresDisponiveis: string[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -146,6 +152,22 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         }
       );
     }
+
+    if (this.nomeBanco === 'Hub Credito') {
+      this.tabelasDisponiveis = ['FOCO NO CORBAN', 'PROMAXX', 'CARTA NA MANGA', 'SONHO DO CORBAN', 'MEGA POWER'];
+      this.bancarizadoresDisponiveis = ['bmp', 'j17']
+    } else {
+      this.bancarizadoresDisponiveis = ['bms']
+      this.tabelasDisponiveis = ['Normal'];
+    }
+
+    if (this.tabelasDisponiveis && this.tabelasDisponiveis.length > 0) {
+      this.nomeTabelaSelecionada = this.tabelasDisponiveis[0];
+    }
+
+    if (this.bancarizadoresDisponiveis && this.bancarizadoresDisponiveis.length > 0) {
+      this.nomeBancarizadorSelecionado = this.bancarizadoresDisponiveis[0];
+    }
   }
 
   ngOnDestroy(): void {
@@ -214,7 +236,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   executeProcessing() {
     const usuariosIds = this.usuariosSelecionados.map((usuario) => usuario.id);
     this.service
-      .executarProcessamento(this.csvId, this.email, usuariosIds, this.nomeBanco!!)
+      .executarProcessamento(this.csvId, this.email, usuariosIds, this.nomeBanco!!, this.nomeTabelaSelecionada!!, this.nomeBancarizadorSelecionado!!)
       .subscribe({
         next: (processoId) => {
           console.log('Processo iniciado com ID:', processoId);

@@ -27,7 +27,23 @@
         Usuários: <strong>{{ quantidadeUsuariosExecutar }}</strong>
       </p>
       <p>Delay (Segundos): <strong>2</strong></p>
-      <p>Tabela: <strong>Normal</strong></p>
+      <p class="tabela-row">
+        Tabela: 
+        <mat-select [(ngModel)]="nomeTabelaSelecionada" class="select">
+          <mat-option *ngFor="let tabela of tabelasDisponiveis" [value]="tabela">
+            {{ tabela }}
+          </mat-option>
+        </mat-select>
+      </p>
+
+      <p class="tabela-row">
+        Bancarizador: 
+        <mat-select [(ngModel)]="nomeBancarizadorSelecionado" class="select">
+          <mat-option *ngFor="let bancarizador of bancarizadoresDisponiveis" [value]="bancarizador">
+            {{ bancarizador }}
+          </mat-option>
+        </mat-select>
+      </p>
 
       <!-- <mat-checkbox checked>Data e hora de término</mat-checkbox> TODO: IMPLEMENTAR POSTERIORMENTE
         <p><strong>25/04</strong> - <strong>07:30</strong></p> -->
