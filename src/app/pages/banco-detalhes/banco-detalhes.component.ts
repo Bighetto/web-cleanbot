@@ -68,6 +68,12 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   userBancos: BankUserResponse[] = [];
 
+  nomeTabelaSelecionada: string | null = null;
+  tabelasDisponiveis: string[] = [];
+
+  nomeBancarizadorSelecionado: string | null = null;
+  bancarizadoresDisponiveis: string[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -96,7 +102,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.email) {
-      this.service.buscarStatusPorEmail(this.email).subscribe({
+      this.service.buscarStatusPorEmail(this.email, this.nomeBanco!!).subscribe({
         next: (status) => {
           this.quantidadeCpfs = status.quantidadeDocumentos;
           this.csvId = status.idCsv;
@@ -120,19 +126,20 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         next: (res) => {
           const nomesUnicos = new Set();
           this.bancos = res.filter((banco) => {
-            this.userBancos.push(banco);
+            if (banco.bankName === this.nomeBanco) {
+              this.userBancos.push(banco); 
+            }
             if (!nomesUnicos.has(banco.bankName)) {
               nomesUnicos.add(banco.bankName);
               return true;
             }
             return false;
           });
-          console.log('Bancos únicos do usuário:', this.bancos);
         },
         error: (err) => {},
       });
 
-      this.webSocketService.connect(this.email);
+      this.webSocketService.connect(this.email, this.nomeBanco!!);
 
       this.websocketSubscription = this.webSocketService.messages$.subscribe(
         (message: string) => {
@@ -145,13 +152,29 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         }
       );
     }
+
+    if (this.nomeBanco === 'Hub Credito') {
+      this.tabelasDisponiveis = ['FOCO NO CORBAN', 'PROMAXX', 'CARTA NA MANGA', 'SONHO DO CORBAN', 'MEGA POWER'];
+      this.bancarizadoresDisponiveis = ['bmp', 'j17']
+    } else {
+      this.bancarizadoresDisponiveis = ['bms']
+      this.tabelasDisponiveis = ['Normal'];
+    }
+
+    if (this.tabelasDisponiveis && this.tabelasDisponiveis.length > 0) {
+      this.nomeTabelaSelecionada = this.tabelasDisponiveis[0];
+    }
+
+    if (this.bancarizadoresDisponiveis && this.bancarizadoresDisponiveis.length > 0) {
+      this.nomeBancarizadorSelecionado = this.bancarizadoresDisponiveis[0];
+    }
   }
 
   ngOnDestroy(): void {
     if (this.websocketSubscription) {
       this.websocketSubscription.unsubscribe();
     }
-    this.webSocketService.close(); // Fechar a conexão WebSocket ao destruir o componente
+    this.webSocketService.close();
   }
 
   // Função para enviar uma mensagem via WebSocket
@@ -161,7 +184,6 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
       this.webSocketService.sendMessage(message);
       console.log('Mensagem enviada:', message);
 
-      // Adiciona a mensagem ao log de consultas
       this.logConsultas.push(`Mensagem enviada: ${JSON.stringify(message)}`);
     }
   }
@@ -214,7 +236,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   executeProcessing() {
     const usuariosIds = this.usuariosSelecionados.map((usuario) => usuario.id);
     this.service
-      .executarProcessamento(this.csvId, this.email, usuariosIds)
+      .executarProcessamento(this.csvId, this.email, usuariosIds, this.nomeBanco!!, this.nomeTabelaSelecionada!!, this.nomeBancarizadorSelecionado!!)
       .subscribe({
         next: (processoId) => {
           console.log('Processo iniciado com ID:', processoId);
@@ -227,7 +249,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   pararProcesso() {
-    this.service.pararProcessamento(this.email).subscribe({
+    this.service.pararProcessamento(this.email, this.nomeBanco!!).subscribe({
       next: (msg) => {
         console.log(msg);
         alert(msg);
@@ -264,7 +286,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
         }
       );
 
-      this.service.uploadFile(file, this.email).subscribe({
+      this.service.uploadFile(file, this.email, this.nomeBanco!!).subscribe({
         next: (res) => {
           console.log(res);
           this.csvId = res.csvId;
@@ -311,7 +333,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   zerarResultados() {
-    this.service.zerarResultados(this.email).subscribe({
+    this.service.zerarResultados(this.email, this.nomeBanco!!).subscribe({
       next: () => {},
       error: (err) => {
         console.error('Erro ao zerar resultados:', err);
@@ -323,7 +345,7 @@ export class BancoDetalhesComponent implements OnInit, OnDestroy {
   }
 
   exportarResultado() {
-    this.service.exportarResultado(this.email).subscribe({
+    this.service.exportarResultado(this.email, this.nomeBanco!!).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');

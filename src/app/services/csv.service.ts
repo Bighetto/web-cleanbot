@@ -15,12 +15,13 @@ export class CsvService {
 
   constructor(private http: HttpClient) {}
 
-  uploadFile(file: File, email: string): Observable<any> {
+  uploadFile(file: File, email: string, bankName: string): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
 
     const headers = new HttpHeaders({
-      email: `${email}`
+      email: `${email}`,
+      bankName: `${bankName}`
     });
 
     return this.http.post<any>(
@@ -34,13 +35,13 @@ export class CsvService {
     );
   }
 
-  buscarStatusPorEmail(email: string): Observable<FindCsvStatusRestModel> {
-    const url = `${this.apiUrl}/status/${encodeURIComponent(email)}`;
+  buscarStatusPorEmail(email: string, bankName: string): Observable<FindCsvStatusRestModel> {
+    const url = `${this.apiUrl}/status/${encodeURIComponent(email)}/${bankName}`;
     return this.http.get<FindCsvStatusRestModel>(url);
   }
 
-  executarProcessamento(csvId: string, email: string, usuarios: string[]): Observable<string> {
-    const body = { csvId, email, usuarios };
+  executarProcessamento(csvId: string, email: string, usuarios: string[], bankName: string, nomeTabelaFiltro: string, bancarizador: string): Observable<string> {
+    const body = { csvId, email, usuarios, bankName, nomeTabelaFiltro, bancarizador };
     
     return this.http.post<{ processoId: string }>(
       `${this.apiUrl}/executar`,
@@ -54,8 +55,8 @@ export class CsvService {
   }
 
   
-  pararProcessamento(email: string): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/parar/${email}`, {})
+  pararProcessamento(email: string, bankName: string): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/parar/${email}/${bankName}`, {})
       .pipe(
         catchError(error => {
           throw error;
@@ -63,13 +64,13 @@ export class CsvService {
       );
   }
 
-  zerarResultados(email: string): Observable<string> {
-    return this.http.delete<string>(`${this.apiUrl}/zerar-resultados/${email}`);
+  zerarResultados(email: string, bankName: string): Observable<string> {
+    return this.http.delete<string>(`${this.apiUrl}/zerar-resultados/${email}/${bankName}`);
   }
   
-  exportarResultado(email: string): Observable<Blob> {
+  exportarResultado(email: string, bankName: string): Observable<Blob> {
     return this.http.post(
-      `${this.apiUrl}/export/${email}`,
+      `${this.apiUrl}/export/${email}/${bankName}`,
       null,
       { responseType: 'blob' }
     );

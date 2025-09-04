@@ -23,7 +23,7 @@ export class BancosComponent implements OnInit {
 
   bankLogoMap: { [key: string]: string } = {
     'V8 Digital': '/img/v8Logo.png',
-    'Banco XPTO': 'assets/xpto-logo.png',
+    'Hub Credito': '/img/hubLogo.png',
     'Meu Banco': 'assets/meu-banco-logo.png',
   };
 
